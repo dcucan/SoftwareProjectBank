@@ -2,12 +2,10 @@ package bankband.bank;
 
 import org.apache.commons.io.IOUtils;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Database {
 
@@ -34,7 +32,11 @@ public class Database {
      */
     public Database() {
         try {
-            connection = DriverManager.getConnection("jdbc:" + Config.DB_CONNECTION + ":" + Config.DB_NAME);
+            String str = "jdbc:" + Config.DB_CONNECTION + ":" + Config.DB_NAME;
+
+            connection = DriverManager.getConnection(str);
+
+            System.out.println("Connected to: " + str);
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(1);
@@ -48,8 +50,19 @@ public class Database {
         Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("init.sql"));
         String content = IOUtils.toString(reader);
 
-        PreparedStatement stmt = connection.prepareStatement(content);
-        stmt.execute();
+        // Rozdelime soubor na jednotlive SQL prikazy oddelene stredniky a postupne je jeden po druhem spustime
+        for (String sql : content.split(";")) {
+            // Trim odstrani prebytecne mezery na zacatku a na konci
+            sql = sql.trim();
+
+            // Preskocime prazdne prikazy
+            if (sql.length() == 0) continue;
+
+            System.out.println("\nExecuting sql:\n" + sql);
+
+            Statement stmt = connection.createStatement();
+            stmt.execute(sql);
+        }
     }
 
     public Connection getConnection() {
