@@ -1,7 +1,12 @@
 package bankband.bank;
 
+import org.apache.commons.io.IOUtils;
+
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Database {
@@ -36,7 +41,18 @@ public class Database {
         }
     }
 
-    public Connection getConnection(){
+    /**
+     * Přečte SQL z init.sql a vytvoří databázi v db
+     */
+    public void install() throws Exception {
+        Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("init.sql"));
+        String content = IOUtils.toString(reader);
+
+        PreparedStatement stmt = connection.prepareStatement(content);
+        stmt.execute();
+    }
+
+    public Connection getConnection() {
         return connection;
     }
 }
