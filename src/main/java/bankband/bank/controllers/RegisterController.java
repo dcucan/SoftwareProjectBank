@@ -1,6 +1,7 @@
 package bankband.bank.controllers;
 
 import bankband.bank.Database;
+import bankband.bank.util.Password;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -32,11 +33,13 @@ public class RegisterController {
         String sql = "INSERT INTO users (first_name, last_name, email, password)"
                 + "VALUES (?, ?, ?, ?);";
 
+        String hash = Password.hashPassword(password.getText());
+
         PreparedStatement stmt = con.prepareStatement(sql);
         stmt.setString(1, name.getText());
         stmt.setString(2, surname.getText());
         stmt.setString(3, email.getText());
-        stmt.setString(4, password.getText());
+        stmt.setString(4, hash);
         stmt.execute();
     }
 
