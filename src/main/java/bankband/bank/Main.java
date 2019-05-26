@@ -1,5 +1,6 @@
 package bankband.bank;
 
+import bankband.bank.controllers.LoginController;
 import bankband.bank.controllers.RegisterController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -24,8 +25,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("register.fxml"));
-        loader.setController(new RegisterController());
+        loader.setLocation(getClass().getClassLoader().getResource("login.fxml"));
+        loader.setController(new LoginController());
 
         Parent root = loader.load();
         Scene scene = new Scene(root);

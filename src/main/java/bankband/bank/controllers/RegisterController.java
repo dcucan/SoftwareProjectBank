@@ -29,6 +29,11 @@ public class RegisterController {
         con = Database.getInstance().getConnection();
     }
 
+    /**
+     * Používáme otazníky -> řeknou databázi že to budou pouze hodnoty, předejdeme problému,
+     * že by uživatel např. dropnul tabulku -> sql injection
+     * @throws SQLException
+     */
     public void onRegister() throws SQLException {
         String sql = "INSERT INTO users (first_name, last_name, email, password)"
                 + "VALUES (?, ?, ?, ?);";
