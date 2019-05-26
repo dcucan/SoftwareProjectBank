@@ -1,9 +1,7 @@
 package bankband.bank;
 
 import bankband.bank.controllers.LoginController;
-import bankband.bank.controllers.RegisterController;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,10 +14,11 @@ public class Main extends Application {
             Database.getInstance().install();
 
             System.out.println("Installation successful.");
-            System.exit(0);
+        } else {
+            launch(args);
         }
 
-        launch(args);
+        System.exit(0);
     }
 
     @Override
