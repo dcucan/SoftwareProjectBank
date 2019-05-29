@@ -27,6 +27,7 @@ public class LoginController {
             System.out.println("Invalid email or password.");
         } else if (Password.checkPassword(password.getText(), user.getPassword())) {
             System.out.println("Logged in.");
+
             Auth.get().setUser(user);
             SceneManager.get().activate("main");
         } else {

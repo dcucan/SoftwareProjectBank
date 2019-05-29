@@ -25,6 +25,8 @@ public class UserRepository {
             if (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt("id"));
+                user.setName(rs.getString("first_name"));
+                user.setSurname(rs.getString("last_name"));
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 return user;
@@ -54,6 +56,8 @@ public class UserRepository {
             if (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt("id"));
+                user.setName(rs.getString("first_name"));
+                user.setSurname(rs.getString("last_name"));
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 return user;
