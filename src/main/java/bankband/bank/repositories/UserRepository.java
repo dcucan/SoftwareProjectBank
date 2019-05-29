@@ -40,11 +40,6 @@ public class UserRepository {
         }
     }
 
-    public String getNameSurname(User user){
-        String name = user.getName()+" "+user.getSurname();
-        return name;
-    }
-
     public User findByEmail(String email) {
         String sql = "SELECT * FROM users WHERE email = ?";
 
@@ -122,6 +117,14 @@ public class UserRepository {
 
 
         return null;
+    }
+
+    public boolean update(User user) {
+        return false;
+    }
+
+    public boolean delete(User user) {
+        return false;
     }
 
 }

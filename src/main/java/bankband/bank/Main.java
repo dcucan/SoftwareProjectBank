@@ -5,8 +5,6 @@ import bankband.bank.controllers.MainController;
 import bankband.bank.controllers.RegisterController;
 import bankband.bank.services.SceneManager;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -28,6 +26,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Scene scene = new Scene(new Pane());
+        scene.getStylesheets().add(getClass().getClassLoader().getResource("css/bootstrap3.css").toExternalForm());
 
         SceneManager.get().setScene(scene);
         SceneManager.get().newScreen("login", "login.fxml", new LoginController());
