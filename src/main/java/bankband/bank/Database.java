@@ -30,7 +30,7 @@ public class Database {
     /**
      * Konstruktor pro vytvoření spojení
      */
-    public Database() {
+    private Database() {
         try {
             String str = "jdbc:" + Config.DB_CONNECTION + ":" + Config.DB_NAME;
 

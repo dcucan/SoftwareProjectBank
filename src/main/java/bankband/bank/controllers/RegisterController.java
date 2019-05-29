@@ -1,17 +1,22 @@
 package bankband.bank.controllers;
 
 import bankband.bank.Database;
+import bankband.bank.models.User;
+import bankband.bank.repositories.UserRepository;
+import bankband.bank.services.Auth;
+import bankband.bank.services.SceneManager;
 import bankband.bank.util.Password;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class RegisterController {
 
-    private Connection con;
+    private UserRepository userRepository = new UserRepository();
 
     @FXML
     private TextField name;
@@ -25,27 +30,29 @@ public class RegisterController {
     @FXML
     private TextField password;
 
-    public void initialize() {
-        con = Database.getInstance().getConnection();
-    }
 
     /**
      * Používáme otazníky -> řeknou databázi že to budou pouze hodnoty, předejdeme problému,
      * že by uživatel např. dropnul tabulku -> sql injection
-     * @throws SQLException
      */
-    public void onRegister() throws SQLException {
-        String sql = "INSERT INTO users (first_name, last_name, email, password)"
-                + "VALUES (?, ?, ?, ?);";
+    public void onRegister() throws IOException {
+
 
         String hash = Password.hashPassword(password.getText());
 
-        PreparedStatement stmt = con.prepareStatement(sql);
-        stmt.setString(1, name.getText());
-        stmt.setString(2, surname.getText());
-        stmt.setString(3, email.getText());
-        stmt.setString(4, hash);
-        stmt.execute();
+        User user = new User();
+        user.setName(name.getText());
+        user.setSurname(surname.getText());
+        user.setEmail(email.getText());
+        user.setPassword(hash);
+
+        if(userRepository.create(user)!=null){
+
+            Auth.get().setUser(user);
+            SceneManager.get().activate("main");
+        }
+
+
     }
 
 }

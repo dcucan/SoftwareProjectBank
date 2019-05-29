@@ -1,10 +1,14 @@
 package bankband.bank;
 
 import bankband.bank.controllers.LoginController;
+import bankband.bank.controllers.MainController;
+import bankband.bank.controllers.RegisterController;
+import bankband.bank.services.SceneManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -23,12 +27,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("login.fxml"));
-        loader.setController(new LoginController());
+        Scene scene = new Scene(new Pane());
 
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
+        SceneManager.get().setScene(scene);
+        SceneManager.get().newScreen("login", "login.fxml", new LoginController());
+        SceneManager.get().newScreen("register", "register.fxml", new RegisterController());
+        SceneManager.get().newScreen("main","mainScene.fxml",new MainController());
+
+        SceneManager.get().activate("login");
 
         primaryStage.setScene(scene);
         primaryStage.show();

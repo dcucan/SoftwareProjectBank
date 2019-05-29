@@ -38,6 +38,11 @@ public class UserRepository {
         }
     }
 
+    public String getNameSurname(User user){
+        String name = user.getName()+" "+user.getSurname();
+        return name;
+    }
+
     public User findByEmail(String email) {
         String sql = "SELECT * FROM users WHERE email = ?";
 
@@ -84,6 +89,35 @@ public class UserRepository {
         }
 
         return list;
+    }
+
+    public Integer create(User user){
+        String sql = "INSERT INTO users (first_name, last_name, email, password)"
+                + "VALUES (?, ?, ?, ?);";
+
+
+        try {
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getSurname());
+            stmt.setString(3, user.getEmail());
+            stmt.setString(4, user.getPassword());
+            stmt.execute();
+
+            sql = "SELECT last_insert_rowid();";
+            stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            user.setId(rs.getInt(1));
+            return user.getId();
+
+        } catch (SQLException e){
+            e.printStackTrace();
+
+        }
+
+
+        return null;
     }
 
 }
