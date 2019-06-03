@@ -6,6 +6,7 @@ import bankband.bank.services.Auth;
 import bankband.bank.services.SceneManager;
 import bankband.bank.util.Password;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -20,18 +21,25 @@ public class LoginController {
     @FXML
     private TextField password;
 
+    @FXML
+    private Label info;
+
     public void onLogin() throws IOException {
         User user = userRepo.findByEmail(email.getText());
 
+
+
         if(user == null) {
-            System.out.println("Invalid email or password.");
+
+            info.setText("Invalid email or password.");
         } else if (Password.checkPassword(password.getText(), user.getPassword())) {
-            System.out.println("Logged in.");
+
 
             Auth.get().setUser(user);
             SceneManager.get().activate("main");
         } else {
-            System.out.println("Invalid email or password.");
+
+            info.setText("Invalid email or password.");
         }
     }
 

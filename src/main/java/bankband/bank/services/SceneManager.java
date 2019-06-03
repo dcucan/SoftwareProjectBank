@@ -3,7 +3,7 @@ package bankband.bank.services;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import jfxtras.styles.jmetro8.JMetro;
+
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -98,6 +98,7 @@ public class SceneManager {
             this.fxml = fxml;
             this.controller = controller;
             this.root = null;
+
         }
 
         /**

@@ -53,6 +53,13 @@ public class RegisterController {
         }
 
 
+
+
+    }
+
+
+    public void onBackTo() throws IOException {
+        SceneManager.get().activate("login");
     }
 
 }
