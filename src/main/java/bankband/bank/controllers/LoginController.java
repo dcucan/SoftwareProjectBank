@@ -11,9 +11,10 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-public class LoginController {
+public class LoginController implements Controller {
 
     private UserRepository userRepo = new UserRepository();
+    private MainController mainController;
 
     @FXML
     private TextField email;
@@ -23,6 +24,12 @@ public class LoginController {
 
     @FXML
     private Label info;
+
+    @Override
+    public void initialize() {
+
+    }
+
 
     public void onLogin() throws IOException {
         User user = userRepo.findByEmail(email.getText());
@@ -36,7 +43,9 @@ public class LoginController {
 
 
             Auth.get().setUser(user);
+
             SceneManager.get().activate("main");
+
         } else {
 
             info.setText("Invalid email or password.");
@@ -46,5 +55,6 @@ public class LoginController {
     public void onRegister() throws IOException {
         SceneManager.get().activate("register");
     }
+
 
 }

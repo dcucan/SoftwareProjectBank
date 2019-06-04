@@ -14,7 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class RegisterController {
+public class RegisterController implements Controller {
 
     private UserRepository userRepository = new UserRepository();
 
@@ -29,6 +29,13 @@ public class RegisterController {
 
     @FXML
     private TextField password;
+
+
+
+    @Override
+    public void initialize(){
+
+    }
 
 
     /**

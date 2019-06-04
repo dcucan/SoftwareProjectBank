@@ -4,12 +4,13 @@ import bankband.bank.models.User;
 import bankband.bank.repositories.UserRepository;
 import bankband.bank.services.Auth;
 import bankband.bank.services.SceneManager;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
 
-public class MainController {
+public class MainController implements Controller {
 
     @FXML
     private Label name;
@@ -17,6 +18,11 @@ public class MainController {
     private UserRepository userRepo = new UserRepository();
 
     public void initialize() {
+        setName();
+
+    }
+
+    public void setName(){
         name.setText(Auth.get().getUser().getName());
     }
 
@@ -27,6 +33,7 @@ public class MainController {
         if (Auth.get().getUser() == null) {
             System.out.println("null");
         }
+
         SceneManager.get().activate("login");
     }
 

@@ -1,5 +1,6 @@
 package bankband.bank.services;
 
+import bankband.bank.controllers.Controller;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,6 +15,8 @@ import java.util.HashMap;
  * SceneManager jednotlive sceny nacita az kdyz sjou potreba pomoci lazy loadingu.
  */
 public class SceneManager {
+
+
 
     /**
      * Instance singletonu
@@ -47,7 +50,7 @@ public class SceneManager {
      * @param fxml
      * @param controller
      */
-    public void newScreen(String name, String fxml, Object controller) {
+    public void newScreen(String name, String fxml, Controller controller) {
         screnes.put(name, new LazyScrene(fxml, controller));
     }
 
@@ -57,9 +60,15 @@ public class SceneManager {
      * @throws IOException
      */
     public void activate(String name) throws IOException {
+
+
         LazyScrene screne = screnes.get(name);
 
         scene.setRoot(screne.get());
+        screne.controller.initialize();
+
+
+
     }
 
     private SceneManager() {
@@ -87,17 +96,18 @@ public class SceneManager {
         /**
          * Controller fxml souboru
          */
-        private Object controller;
+        private Controller controller;
 
         /**
          * Instance rootu fxml. Pokud je null, dana obrazovka jeste nebyla nactena.
          */
         private Parent root;
 
-        public LazyScrene(String fxml, Object controller) {
+        public LazyScrene(String fxml, Controller controller) {
             this.fxml = fxml;
             this.controller = controller;
             this.root = null;
+
 
         }
 
@@ -113,6 +123,7 @@ public class SceneManager {
                 FXMLLoader loader = new FXMLLoader();
                 // Nastavime controller obrazovky
                 loader.setController(controller);
+
                 // Nastavime FXML soubor obsahujici danou obrazovku
                 loader.setLocation(getClass().getClassLoader().getResource(fxml));
                 // Nacteme root element
