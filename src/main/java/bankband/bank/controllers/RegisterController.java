@@ -1,6 +1,6 @@
 package bankband.bank.controllers;
 
-import bankband.bank.Database;
+
 import bankband.bank.models.User;
 import bankband.bank.repositories.UserRepository;
 import bankband.bank.services.Auth;
@@ -10,9 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
 
 public class RegisterController implements Controller {
 
@@ -31,10 +29,13 @@ public class RegisterController implements Controller {
     private TextField password;
 
 
-
     @Override
-    public void initialize(){
+    public void initialize() {
 
+        email.clear();
+        password.clear();
+        surname.clear();
+        name.clear();
     }
 
 
@@ -53,13 +54,11 @@ public class RegisterController implements Controller {
         user.setEmail(email.getText());
         user.setPassword(hash);
 
-        if(userRepository.create(user)!=null){
+        if (userRepository.create(user) != null) {
 
             Auth.get().setUser(user);
             SceneManager.get().activate("main");
         }
-
-
 
 
     }

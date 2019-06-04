@@ -14,7 +14,7 @@ import java.io.IOException;
 public class LoginController implements Controller {
 
     private UserRepository userRepo = new UserRepository();
-    private MainController mainController;
+
 
     @FXML
     private TextField email;
@@ -35,8 +35,7 @@ public class LoginController implements Controller {
         User user = userRepo.findByEmail(email.getText());
 
 
-
-        if(user == null) {
+        if (user == null) {
 
             info.setText("Invalid email or password.");
         } else if (Password.checkPassword(password.getText(), user.getPassword())) {
