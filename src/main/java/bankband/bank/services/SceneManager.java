@@ -17,7 +17,6 @@ import java.util.HashMap;
 public class SceneManager {
 
 
-
     /**
      * Instance singletonu
      */
@@ -38,6 +37,7 @@ public class SceneManager {
 
     /**
      * Nastavi hlavni scenu. Je nutne zavolat pred aktivaci prvni obrazovky.
+     *
      * @param scene
      */
     public void setScene(Scene scene) {
@@ -46,6 +46,7 @@ public class SceneManager {
 
     /**
      * Prida novou obrazovku do seznamu obrazovek. Jeji nacteni a zobrazeni oddali pomoci lazy loadingu.
+     *
      * @param name
      * @param fxml
      * @param controller
@@ -56,6 +57,7 @@ public class SceneManager {
 
     /**
      * Aktivuje a zobrazi danou obrazovku.
+     *
      * @param name
      * @throws IOException
      */
@@ -68,7 +70,6 @@ public class SceneManager {
         screne.controller.initialize();
 
 
-
     }
 
     private SceneManager() {
@@ -76,7 +77,7 @@ public class SceneManager {
     }
 
     public static SceneManager get() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new SceneManager();
         }
 
@@ -113,6 +114,7 @@ public class SceneManager {
 
         /**
          * Vrati root element dane obrazovky. Podle potreby ho nacte, ci vrati jiz drive nacteny.
+         *
          * @return
          * @throws IOException
          */

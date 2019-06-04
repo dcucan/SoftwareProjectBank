@@ -2,12 +2,11 @@ package bankband.bank.controllers;
 
 import bankband.bank.models.Account;
 import bankband.bank.repositories.AccountRepository;
-import bankband.bank.services.Auth;
 import bankband.bank.services.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-import java.awt.*;
+
 import java.io.IOException;
 import java.util.Random;
 

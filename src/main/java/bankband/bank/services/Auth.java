@@ -10,12 +10,12 @@ public class Auth {
     private static Auth instance;
     private User user;
 
-    private Auth(){
+    private Auth() {
 
     }
 
-    public static Auth get(){
-        if (instance==null){
+    public static Auth get() {
+        if (instance == null) {
             instance = new Auth();
         }
         return instance;
@@ -24,11 +24,11 @@ public class Auth {
     //Zjistit kdo je přihlášen
 
 
-    public void setUser(User user){
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public User getUser(){
+    public User getUser() {
         return user;
     }
 

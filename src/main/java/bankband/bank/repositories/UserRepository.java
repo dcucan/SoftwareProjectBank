@@ -90,7 +90,7 @@ public class UserRepository {
         return list;
     }
 
-    public Integer create(User user){
+    public Integer create(User user) {
         String sql = "INSERT INTO users (first_name, last_name, email, password)"
                 + "VALUES (?, ?, ?, ?);";
 
@@ -110,7 +110,7 @@ public class UserRepository {
             user.setId(rs.getInt(1));
             return user.getId();
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
 
         }
