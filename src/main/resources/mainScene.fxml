@@ -10,7 +10,7 @@
       <Label fx:id="name" layoutX="40.0" layoutY="21.0" prefHeight="17.0" prefWidth="206.0" text="Label" />
       <ButtonBar layoutX="369.0" layoutY="18.0" prefHeight="40.0" prefWidth="217.0" styleClass="menu-bar">
         <buttons>
-          <Button minWidth="20.0" mnemonicParsing="false" text="New account" textAlignment="CENTER" />
+          <Button minWidth="20.0" mnemonicParsing="false" onAction="#onNewAccount" text="New account" textAlignment="CENTER" />
             <Button minWidth="0.0" mnemonicParsing="false" onAction="#onLogout" prefWidth="142.0" text="Logout" textAlignment="RIGHT" textOverrun="LEADING_WORD_ELLIPSIS" />
         </buttons>
       </ButtonBar>

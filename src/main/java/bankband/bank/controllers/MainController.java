@@ -37,4 +37,10 @@ public class MainController implements Controller {
         SceneManager.get().activate("login");
     }
 
+
+
+    public void onNewAccount() throws IOException {
+        SceneManager.get().activate("newAccount");
+    }
+
 }

@@ -17,6 +17,7 @@ CREATE TABLE accounts (
     type TEXT NOT NULL,
     balance INTEGER NOT NULL,
     postNumber INTEGER NOT NULL,
-    FOREIGN KEY(id) REFERENCES users(id)
+    user_id INTEGER NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
