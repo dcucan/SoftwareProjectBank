@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -27,14 +28,17 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Pane fx:id="colorPane" layoutX="-2.0" layoutY="-5.0" prefHeight="80.0" prefWidth="99.0">
+      <Pane fx:id="colorPane" layoutX="-1.0" layoutY="4.0" prefHeight="62.0" prefWidth="98.0">
          <children>
-            <Label fx:id="date" layoutX="16.0" layoutY="31.0" text="20.3.2019" textAlignment="CENTER" textFill="#4a4343">
+            <Label fx:id="date" layoutX="15.0" layoutY="22.0" text="20.3.2019" textAlignment="CENTER" textFill="#4a4343">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
          </children>
+         <effect>
+            <InnerShadow height="75.64" radius="25.9375" width="30.11" />
+         </effect>
       </Pane>
       <Label fx:id="fromTo" layoutX="124.0" layoutY="14.0" prefHeight="17.0" prefWidth="89.0" />
    </children>

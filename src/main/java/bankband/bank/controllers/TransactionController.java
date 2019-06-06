@@ -56,16 +56,16 @@ public class TransactionController implements Controller {
 
         if(repo.isIncoming(transaction, account)){
             colorPane.setStyle("-fx-background-color: #23db1a;");
-            date.setText(transaction.getDateTime().toString());
+            date.setText("06-06-2019");
             number.setText(""+transaction.getFromAccount().getNumber());
             postCode.setText(""+transaction.getFromAccount().getPostNumber());
             amount.setText(""+transaction.getAmount());
-            type.setText(transaction.getToAccount().getType());
+            type.setText(transaction.getFromAccount().getType());
             fromTo.setText("From account:");
 
         } else {
-            colorPane.setStyle("-fx-background-color: #e03c0b;");
-            date.setText(transaction.getDateTime().toString());
+            colorPane.setStyle("-fx-background-color: #ff0000;");
+            date.setText("06-06-2019");
             number.setText(""+transaction.getToAccount().getNumber());
             postCode.setText(""+transaction.getToAccount().getPostNumber());
             amount.setText(""+transaction.getAmount());
