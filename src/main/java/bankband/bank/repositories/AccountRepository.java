@@ -2,19 +2,51 @@ package bankband.bank.repositories;
 
 import bankband.bank.Database;
 import bankband.bank.models.Account;
+import bankband.bank.models.User;
 import bankband.bank.services.Auth;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountRepository {
 
     private Connection conn = Database.getInstance().getConnection();
 
 
-    public void findAllByUser() {
+    public List<Account> findAllForUser(User user) {
+        ArrayList<Account> list = new ArrayList<>();
+        String sql = "SELECT * FROM accounts WHERE user_id = ?";
+
+
+        try {
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, user.getId());
+            ResultSet rs = stmt.executeQuery();
+
+
+            while (rs.next()) {
+                Account account = new Account();
+                account.setPostNumber(rs.getInt("postNumber"));
+                account.setNumber(rs.getInt("number"));
+                account.setBalance(rs.getInt("balance"));
+                account.setType(rs.getString("type"));
+                account.setId(rs.getInt("id"));
+                list.add(account);
+
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return list;
+        }
+
+        return list;
 
     }
 
