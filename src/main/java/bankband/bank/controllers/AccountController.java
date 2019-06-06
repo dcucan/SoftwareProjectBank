@@ -47,7 +47,18 @@ public class AccountController implements Controller {
 
     }
 
-    public void onTransactionHistory(){
+    public void onTransactionHistory() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(new TransactionHistoryController(account));
+        loader.setLocation(getClass().getClassLoader().getResource("TransactionHistory.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Transaction history");
+        stage.show();
+
 
     }
 }

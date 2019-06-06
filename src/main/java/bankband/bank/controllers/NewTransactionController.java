@@ -6,6 +6,7 @@ import bankband.bank.repositories.AccountRepository;
 import bankband.bank.repositories.TransactionRepository;
 import bankband.bank.services.SceneManager;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -28,6 +29,12 @@ public class NewTransactionController implements Controller {
     @FXML
     private TextField type;
 
+    @FXML
+    private Label fal;
+
+    @FXML
+    private Label tru;
+
     public NewTransactionController(Account fromAccount) {
         this.fromAccount = fromAccount;
     }
@@ -37,7 +44,7 @@ public class NewTransactionController implements Controller {
 
     }
 
-    public void onConfirm(){
+    public void onConfirm() throws IOException {
         AccountRepository accountRepository = new AccountRepository();
         TransactionRepository transactionRepository = new TransactionRepository();
 
@@ -57,11 +64,19 @@ public class NewTransactionController implements Controller {
 
             toAccount.setBalance(toAccount.getBalance() + cash);
             accountRepository.update(toAccount);
+            tru.setText("Successful");
+            number.clear();
+            amount.clear();
+            postCode.clear();
+            type.clear();
+
+
+            SceneManager.get().activate("main");
+        } else {
+
+            fal.setText("Something went wrong");
         }
     }
 
-    public void onGoBack() throws IOException {
 
-        SceneManager.get().activate("main");
-    }
 }
