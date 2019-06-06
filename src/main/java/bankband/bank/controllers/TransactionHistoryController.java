@@ -3,7 +3,6 @@ package bankband.bank.controllers;
 import bankband.bank.models.Account;
 import bankband.bank.models.Transaction;
 import bankband.bank.repositories.TransactionRepository;
-import bankband.bank.services.Auth;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
@@ -41,7 +40,7 @@ public class TransactionHistoryController implements Controller {
         for (Transaction transaction : list){
 
             FXMLLoader loader = new FXMLLoader();
-            loader.setController(new  TransactionController(transaction));
+            loader.setController(new  TransactionController(transaction, account));
             loader.setLocation(getClass().getClassLoader().getResource("singleTransaction.fxml"));
 
             try {

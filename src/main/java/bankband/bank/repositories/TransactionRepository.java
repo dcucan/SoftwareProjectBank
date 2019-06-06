@@ -41,16 +41,25 @@ public class TransactionRepository {
     }
 
 
+    public boolean isIncoming(Transaction transaction, Account account){
+        if(account.getId()==transaction.getToAccount().getId()){
+            return true;
+        } else {
+        return false;
+        }
+    }
+
     public List<Transaction> findAllForAccount(Account account) {
         ArrayList<Transaction> list = new ArrayList<>();
         AccountRepository repo = new AccountRepository();
-        String sql = "SELECT * FROM transactions WHERE from_account_id = ?";
+        String sql = "SELECT * FROM transactions WHERE from_account_id = ? OR to_account_id = ?";
 
 
         try {
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, account.getId());
+            stmt.setInt(2, account.getId());
             ResultSet rs = stmt.executeQuery();
 
 
@@ -58,7 +67,7 @@ public class TransactionRepository {
 
                 Transaction transaction = new Transaction();
                 transaction.setToAccount(repo.findById(rs.getInt("to_account_id")));
-                transaction.setFromAccount(account);
+                transaction.setFromAccount(repo.findById(rs.getInt("from_account_id")));
                 transaction.setDateTime(rs.getTime("date_time"));
                 transaction.setAmount(rs.getInt("ammount"));
                 transaction.setId(rs.getInt("id"));
