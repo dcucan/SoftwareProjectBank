@@ -1,9 +1,6 @@
 package bankband.bank;
 
-import bankband.bank.controllers.LoginController;
-import bankband.bank.controllers.MainController;
-import bankband.bank.controllers.NewAccountController;
-import bankband.bank.controllers.RegisterController;
+import bankband.bank.controllers.*;
 import bankband.bank.services.SceneManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -34,6 +31,7 @@ public class Main extends Application {
         SceneManager.get().newScreen("register", "register.fxml", new RegisterController());
         SceneManager.get().newScreen("main","mainScene.fxml",new MainController());
         SceneManager.get().newScreen("newAccount","newAccount.fxml", new NewAccountController());
+        // SceneManager.get().newScreen("newTransaction","newTransaction.fxml", new NewTransactionController());
 
         SceneManager.get().activate("login");
 

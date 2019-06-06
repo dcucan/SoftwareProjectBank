@@ -1,8 +1,16 @@
 package bankband.bank.controllers;
 
 import bankband.bank.models.Account;
+import bankband.bank.services.SceneManager;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.Date;
 
 
 public class AccountController implements Controller {
@@ -25,7 +33,17 @@ public class AccountController implements Controller {
         this.account = account;
     }
 
-    public void onNewTransaction(){
+    public void onNewTransaction() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(new NewTransactionController(account));
+        loader.setLocation(getClass().getClassLoader().getResource("newTransaction.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("New transaction");
+        stage.show();
 
     }
 

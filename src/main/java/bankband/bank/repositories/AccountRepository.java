@@ -16,6 +16,28 @@ public class AccountRepository {
 
     private Connection conn = Database.getInstance().getConnection();
 
+    public Account findByNumber(int number) {
+        String sql = "SELECT * FROM accounts WHERE number = ?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, number);
+            ResultSet rs = stmt.executeQuery();
+
+            Account account = new Account();
+            account.setPostNumber(rs.getInt("postNumber"));
+            account.setNumber(rs.getInt("number"));
+            account.setBalance(rs.getInt("balance"));
+            account.setType(rs.getString("type"));
+            account.setId(rs.getInt("id"));
+            account.setUserId(rs.getInt("user_id"));
+            return account;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public List<Account> findAllForUser(User user) {
         ArrayList<Account> list = new ArrayList<>();
@@ -36,6 +58,7 @@ public class AccountRepository {
                 account.setBalance(rs.getInt("balance"));
                 account.setType(rs.getString("type"));
                 account.setId(rs.getInt("id"));
+                account.setUserId(rs.getInt("user_id"));
                 list.add(account);
 
             }
@@ -77,5 +100,26 @@ public class AccountRepository {
 
 
         return null;
+    }
+
+    public boolean update(Account account) {
+        String sql = "UPDATE accounts SET number = ?, type = ?, balance = ?, postNumber = ?, user_id = ?"
+                + "WHERE id = ?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, account.getNumber());
+            stmt.setString(2, account.getType());
+            stmt.setInt(3, account.getBalance());
+            stmt.setInt(4, account.getPostNumber());
+            stmt.setInt(5, account.getUserId());
+            stmt.setInt(6, account.getId());
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 }

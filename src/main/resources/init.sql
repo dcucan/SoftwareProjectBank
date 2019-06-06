@@ -1,7 +1,10 @@
 PRAGMA foreign_keys = ON;
 
-DROP TABLE IF EXISTS users;
+
+
+DROP TABLE IF EXISTS transactions;
 DROP TABLE IF EXISTS accounts;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,5 +22,17 @@ CREATE TABLE accounts (
     postNumber INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
+CREATE TABLE transactions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ammount INTEGER NOT NULL,
+    date_time INTEGER NOT NULL,
+    from_account_id INTEGER NOT NULL,
+    to_account_id INTEGER NOT NULL,
+    FOREIGN KEY(from_account_id) REFERENCES accounts(id),
+    FOREIGN KEY(to_account_id) REFERENCES accounts(id)
+
+
 );
 
