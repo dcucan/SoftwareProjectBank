@@ -2,7 +2,9 @@ package bankband.bank.controllers;
 
 import bankband.bank.models.Account;
 import bankband.bank.models.Transaction;
+import bankband.bank.models.TransactionType;
 import bankband.bank.repositories.TransactionRepository;
+import bankband.bank.repositories.TransactionTypeRepository;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -42,6 +44,8 @@ public class TransactionController implements Controller {
     private Transaction transaction = new Transaction();
     private Account account = new Account();
     private TransactionRepository repo = new TransactionRepository();
+    private TransactionType transactionType = new TransactionType();
+    private TransactionTypeRepository typeRepo = new TransactionTypeRepository();
 
     public TransactionController(Transaction transaction, Account account){
         this.transaction = transaction;
@@ -52,7 +56,7 @@ public class TransactionController implements Controller {
 
 
 
-    public void setUp(Account account,Transaction transaction ){
+    public void setUp(Account account,Transaction transaction){
 
         if(repo.isIncoming(transaction, account)){
             colorPane.setStyle("-fx-background-color: #23db1a;");
@@ -60,7 +64,7 @@ public class TransactionController implements Controller {
             number.setText(""+transaction.getFromAccount().getNumber());
             postCode.setText(""+transaction.getFromAccount().getPostNumber());
             amount.setText(""+transaction.getAmount());
-            type.setText(transaction.getFromAccount().getType());
+            type.setText(typeRepo.findByTransaction(transaction).getType());
             fromTo.setText("From account:");
 
         } else {
@@ -69,7 +73,7 @@ public class TransactionController implements Controller {
             number.setText(""+transaction.getToAccount().getNumber());
             postCode.setText(""+transaction.getToAccount().getPostNumber());
             amount.setText(""+transaction.getAmount());
-            type.setText(transaction.getToAccount().getType());
+            type.setText(typeRepo.findByTransaction(transaction).getType());
             fromTo.setText("To account:");
         }
 

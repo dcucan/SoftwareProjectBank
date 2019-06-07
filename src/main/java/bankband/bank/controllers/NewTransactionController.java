@@ -2,8 +2,10 @@ package bankband.bank.controllers;
 
 import bankband.bank.models.Account;
 import bankband.bank.models.Transaction;
+import bankband.bank.models.TransactionType;
 import bankband.bank.repositories.AccountRepository;
 import bankband.bank.repositories.TransactionRepository;
+import bankband.bank.repositories.TransactionTypeRepository;
 import bankband.bank.services.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -47,6 +49,7 @@ public class NewTransactionController implements Controller {
     public void onConfirm() throws IOException {
         AccountRepository accountRepository = new AccountRepository();
         TransactionRepository transactionRepository = new TransactionRepository();
+        TransactionTypeRepository transactionTypeRepository = new TransactionTypeRepository();
 
         int cash = Integer.parseInt(amount.getText());
 
@@ -58,7 +61,16 @@ public class NewTransactionController implements Controller {
         transaction.setFromAccount(fromAccount);
         transaction.setToAccount(toAccount);
 
+
+
+
         if(transactionRepository.create(transaction) != null) {
+
+            TransactionType transactionType = new TransactionType();
+            transactionType.setType(type.getText());
+            transactionType.setTransactionId(transaction);
+            transactionTypeRepository.create(transactionType);
+
             fromAccount.setBalance(fromAccount.getBalance() - cash);
             accountRepository.update(fromAccount);
 

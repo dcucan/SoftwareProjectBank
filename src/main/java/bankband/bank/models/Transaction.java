@@ -14,6 +14,8 @@ public class Transaction {
 
     private Account toAccount;
 
+
+
     public int getId() {
         return id;
     }
@@ -53,4 +55,6 @@ public class Transaction {
     public void setToAccount(Account toAccount) {
         this.toAccount = toAccount;
     }
+
+
 }
