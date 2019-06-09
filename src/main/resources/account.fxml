@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="21.0" layoutY="14.0" prefHeight="17.0" prefWidth="60.0" text="Account:" />
@@ -12,7 +11,8 @@
       <Label layoutX="21.0" layoutY="43.0" prefHeight="17.0" prefWidth="60.0" text="Balance:" />
       <Label fx:id="balance" layoutX="89.0" layoutY="43.0" prefHeight="17.0" prefWidth="67.0" text="12.000.00" />
       <Label layoutX="156.0" layoutY="43.0" text="EUR" />
-      <Button layoutX="280.0" layoutY="37.0" mnemonicParsing="false" onAction="#onTransactionHistory" text="Transaction history" />
-      <Button layoutX="280.0" layoutY="8.0" mnemonicParsing="false" onAction="#onNewTransaction" prefWidth="149.0" text="New transaction" />
+      <Button layoutX="232.0" layoutY="38.0" mnemonicParsing="false" onAction="#onTransactionHistory" prefHeight="27.0" prefWidth="137.0" text="Transaction history" />
+      <Button layoutX="232.0" layoutY="9.0" mnemonicParsing="false" onAction="#onNewTransaction" prefHeight="27.0" prefWidth="137.0" text="New transaction" />
+      <Button layoutX="373.0" layoutY="23.0" mnemonicParsing="false" onAction="#onNewCard" text="New card" />
    </children>
 </Pane>

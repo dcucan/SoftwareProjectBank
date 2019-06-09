@@ -1,6 +1,9 @@
 package bankband.bank.controllers;
 
 import bankband.bank.models.Account;
+import bankband.bank.models.Card;
+import bankband.bank.repositories.CardRepository;
+import bankband.bank.util.Password;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,7 +12,8 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+import java.sql.Date;
+import java.util.Random;
 
 
 public class AccountController implements Controller {
@@ -17,7 +21,7 @@ public class AccountController implements Controller {
     @Override
     public void initialize() {
         number.setText(account.getNumber() + "/" + account.getPostNumber());
-        balance.setText(""+account.getBalance());
+        balance.setText("" + account.getBalance());
     }
 
     @FXML
@@ -27,6 +31,8 @@ public class AccountController implements Controller {
     private Label balance;
 
     private Account account;
+
+    private Random random = new Random();
 
     public AccountController(Account account) {
         this.account = account;
@@ -57,6 +63,28 @@ public class AccountController implements Controller {
         stage.setScene(scene);
         stage.setTitle("Transaction history");
         stage.show();
+
+    }
+
+
+
+
+    public void onNewCard(){
+
+        String hash = Password.hashPassword(random.nextInt(8999) + 1000 + "" );
+
+        CardRepository repository = new CardRepository();
+
+        Card card = new Card();
+        card.setAccountId(account);
+        card.setNumber(random.nextInt(8999) + 1000 + random.nextInt(8999) + 1000
+        + random.nextInt(8999) + 1000 + random.nextInt(8999) + 1000);
+        card.setCcv(random.nextInt(899)+100);
+        card.setExpirationDate(new Date(2022));
+        card.setImage("image");
+        card.setPin(hash);
+
+        repository.create(card);
 
 
     }
