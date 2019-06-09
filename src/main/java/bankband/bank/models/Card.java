@@ -19,6 +19,14 @@ public class Card {
 
     private Account accountId;
 
+    private int limit;
+
+    public int getLimit(){return limit;}
+
+    public void setLimit(int limit){
+        this.limit = limit;
+    }
+
     public int getId() {
         return id;
     }

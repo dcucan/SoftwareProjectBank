@@ -50,6 +50,7 @@ CREATE TABLE cards (
     ccv INTEGER NOT NULL,
     pin TEXT NOT NULL,
     image TEXT NOT NULL,
+    limit INTEGER NOT NULL,
     account_id INTEGER NOT NULL,
     FOREIGN KEY(account_id) REFERENCES accounts(id)
 );

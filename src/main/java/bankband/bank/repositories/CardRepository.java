@@ -14,8 +14,8 @@ public class CardRepository {
 
 
     public Integer create(Card card) {
-        String sql = "INSERT INTO cards (number, expiration, ccv, pin, image, account_id)" +
-                "VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO cards (number, expiration, ccv, pin, image, account_id, limit)" +
+                "VALUES (?,?,?,?,?,?,?)";
 
 
         try {
@@ -26,6 +26,7 @@ public class CardRepository {
             stmt.setString(4,card.getPin());
             stmt.setString(5, card.getImage());
             stmt.setInt(6, card.getAccountId().getId());
+            stmt.setInt(7, card.getLimit());
             stmt.execute();
 
             sql = "SELECT last_insert_rowid();";

@@ -82,6 +82,7 @@ public class AccountController implements Controller {
         card.setCcv(random.nextInt(899)+100);
         card.setExpirationDate(new Date(2022));
         card.setImage("image");
+        card.setLimit(10000);
         card.setPin(hash);
 
         repository.create(card);
