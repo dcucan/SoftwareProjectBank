@@ -1,7 +1,6 @@
 package bankband.bank.controllers;
 
 import bankband.bank.models.Account;
-import bankband.bank.services.SceneManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Date;
+
 
 
 public class AccountController implements Controller {

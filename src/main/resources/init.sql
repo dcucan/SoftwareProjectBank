@@ -52,5 +52,7 @@ CREATE TABLE cards (
     image TEXT NOT NULL,
     account_id INTEGER NOT NULL,
     FOREIGN KEY(account_id) REFERENCES accounts(id)
-)
+);
+
+
 

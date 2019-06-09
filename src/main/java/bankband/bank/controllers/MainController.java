@@ -70,4 +70,9 @@ public class MainController implements Controller {
         SceneManager.get().activate("newAccount");
     }
 
+
+    public void onNewCard(){
+
+    }
+
 }
