@@ -77,7 +77,7 @@ public class MainController implements Controller {
         for (Card card : allCards ){
 
             FXMLLoader loader = new FXMLLoader();
-            loader.setController(new CardController());
+            loader.setController(new CardController(card));
             loader.setLocation(getClass().getClassLoader().getResource("card.fxml"));
 
             try {
