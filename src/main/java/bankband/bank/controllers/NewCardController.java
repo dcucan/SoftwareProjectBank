@@ -6,12 +6,11 @@ import bankband.bank.repositories.CardRepository;
 import bankband.bank.util.Password;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import javax.sound.midi.Soundbank;
 import java.sql.Date;
 import java.util.Random;
 
@@ -28,13 +27,19 @@ public class NewCardController implements Controller {
     }
 
     @FXML
-    ImageView image;
+    private ImageView image;
 
     @FXML
-    ComboBox<String> design;
+    private ComboBox<String> design;
 
     @FXML
-    TextField limit;
+    private TextField limit;
+
+    @FXML
+    private Label fal;
+
+    @FXML
+    private Label tru;
 
     @Override
     public void initialize(){
@@ -62,7 +67,10 @@ public class NewCardController implements Controller {
         card.setPin(hash);
 
         if(repository.create(card)==null){
-            System.out.println("Cant create card");
+            fal.setText("Something went wrong");
+        } else {
+            tru.setText("Succesful");
+            image.setImage(null);
         }
 
 

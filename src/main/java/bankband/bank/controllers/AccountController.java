@@ -1,9 +1,6 @@
 package bankband.bank.controllers;
 
 import bankband.bank.models.Account;
-import bankband.bank.models.Card;
-import bankband.bank.repositories.CardRepository;
-import bankband.bank.util.Password;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.Random;
 
 
