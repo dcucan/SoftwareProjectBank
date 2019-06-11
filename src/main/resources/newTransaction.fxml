@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -27,17 +26,6 @@
          </font>
       </Label>
       <Label fx:id="fal" layoutX="152.0" layoutY="293.0" prefHeight="17.0" prefWidth="148.0" textAlignment="CENTER" textFill="#fc1f1f" />
-      <MenuButton fx:id="type" layoutX="151.0" layoutY="232.0" mnemonicParsing="false" prefWidth="161.0" text="Transaction Type">
-        <items>
-            <MenuItem mnemonicParsing="false" onAction="#onOther" text="Other" />
-          <MenuItem mnemonicParsing="false" onAction="#onAlcohol" text="Alcohol" />
-            <MenuItem mnemonicParsing="false" onAction="#onTransport" text="Transport" />
-            <MenuItem mnemonicParsing="false" onAction="#onHealth" text="Health" />
-            <MenuItem mnemonicParsing="false" onAction="#onLiving" text="Living " />
-          <MenuItem mnemonicParsing="false" onAction="#onFood" text="Food" />
-            <MenuItem mnemonicParsing="false" onAction="#onRent" text="Rent" />
-            <MenuItem mnemonicParsing="false" onAction="#onTechnology" text="Technology" />
-        </items>
-      </MenuButton>
+      <ComboBox fx:id="transactionType" layoutX="151.0" layoutY="255.0" onAction="#onTransactionType" prefWidth="161.0" />
    </children>
 </Pane>

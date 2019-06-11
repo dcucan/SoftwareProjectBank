@@ -69,8 +69,24 @@ public class AccountController implements Controller {
 
 
 
-    public void onNewCard(){
+    public void onNewCard() throws IOException {
 
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(new NewCardController(account));
+        loader.setLocation(getClass().getClassLoader().getResource("newCard.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("New card");
+        stage.show();
+
+
+
+
+
+        /**
         String hash = Password.hashPassword(random.nextInt(8999) + 1000 + "" );
 
         CardRepository repository = new CardRepository();
@@ -86,6 +102,8 @@ public class AccountController implements Controller {
         card.setPin(hash);
 
         repository.create(card);
+
+         **/
 
 
     }

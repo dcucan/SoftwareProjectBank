@@ -8,6 +8,7 @@ import bankband.bank.repositories.TransactionRepository;
 import bankband.bank.repositories.TransactionTypeRepository;
 import bankband.bank.services.SceneManager;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
@@ -30,7 +31,7 @@ public class NewTransactionController implements Controller {
     private TextField amount;
 
     @FXML
-    private MenuButton type;
+    private ComboBox<String> transactionType;
 
     @FXML
     private Label fal;
@@ -45,88 +46,62 @@ public class NewTransactionController implements Controller {
 
     @Override
     public void initialize() {
-
+        transactionType.getItems().clear();
+        transactionType.getItems().setAll("Alcohol", "Food", "Gas");
     }
 
 
-    public void onOther() {
-        type.setText("Other");
-    }
-
-    public void onAlcohol() {
-        type.setText("Alcohol");
-    }
-
-    public void onTransport() {
-        type.setText("Transport");
-    }
-
-    public void onHealth() {
-        type.setText("Health");
-    }
-
-    public void onLiving() {
-        type.setText("Living");
-    }
-
-    public void onFood() {
-        type.setText("Food");
-    }
-
-    public void onRent() {
-        type.setText("Rent");
-    }
-
-    public void onTechnology() {
-        type.setText("Technology");
+    public void onTransactionType() {
+        String selected = transactionType.getSelectionModel().getSelectedItem();
+        System.out.println(selected);
     }
 
 
     public void onConfirm() throws IOException {
 
-        if (type.getText().contains("Type")) {
+        if(this.transactionType.getSelectionModel().getSelectedItem() == null) {
             fal.setText("Missing type of transaction");
+            return;
+        }
+
+        fal.setText("");
+        AccountRepository accountRepository = new AccountRepository();
+        TransactionRepository transactionRepository = new TransactionRepository();
+        TransactionTypeRepository transactionTypeRepository = new TransactionTypeRepository();
+
+        int cash = Integer.parseInt(amount.getText());
+
+        Account toAccount = accountRepository.findByNumber(Integer.parseInt(number.getText()));
+
+        Transaction transaction = new Transaction();
+        transaction.setAmount(cash);
+        transaction.setDateTime(Date.valueOf(LocalDate.now()));
+        transaction.setFromAccount(fromAccount);
+        transaction.setToAccount(toAccount);
+
+
+        if (transactionRepository.create(transaction) != null) {
+
+            TransactionType transactionType = new TransactionType();
+            transactionType.setType(this.transactionType.getSelectionModel().getSelectedItem());
+            transactionType.setTransactionId(transaction);
+            transactionTypeRepository.create(transactionType);
+
+            fromAccount.setBalance(fromAccount.getBalance() - cash);
+            accountRepository.update(fromAccount);
+
+            toAccount.setBalance(toAccount.getBalance() + cash);
+            accountRepository.update(toAccount);
+            tru.setText("Successful");
+            number.clear();
+            amount.clear();
+            postCode.clear();
+
+
+            SceneManager.get().activate("main");
         } else {
 
-            fal.setText("");
-            AccountRepository accountRepository = new AccountRepository();
-            TransactionRepository transactionRepository = new TransactionRepository();
-            TransactionTypeRepository transactionTypeRepository = new TransactionTypeRepository();
-
-            int cash = Integer.parseInt(amount.getText());
-
-            Account toAccount = accountRepository.findByNumber(Integer.parseInt(number.getText()));
-
-            Transaction transaction = new Transaction();
-            transaction.setAmount(cash);
-            transaction.setDateTime(Date.valueOf(LocalDate.now()));
-            transaction.setFromAccount(fromAccount);
-            transaction.setToAccount(toAccount);
-
-
-            if (transactionRepository.create(transaction) != null) {
-
-                TransactionType transactionType = new TransactionType();
-                transactionType.setType(type.getText());
-                transactionType.setTransactionId(transaction);
-                transactionTypeRepository.create(transactionType);
-
-                fromAccount.setBalance(fromAccount.getBalance() - cash);
-                accountRepository.update(fromAccount);
-
-                toAccount.setBalance(toAccount.getBalance() + cash);
-                accountRepository.update(toAccount);
-                tru.setText("Successful");
-                number.clear();
-                amount.clear();
-                postCode.clear();
-
-
-                SceneManager.get().activate("main");
-            } else {
-
-                fal.setText("Something went wrong");
-            }
+            fal.setText("Something went wrong");
         }
     }
 

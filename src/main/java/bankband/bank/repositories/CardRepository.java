@@ -14,7 +14,7 @@ public class CardRepository {
 
 
     public Integer create(Card card) {
-        String sql = "INSERT INTO cards (number, expiration, ccv, pin, image, account_id, limit)" +
+        String sql = "INSERT INTO cards (number, expiration, ccv, pin, image, account_id, card_limit)" +
                 "VALUES (?,?,?,?,?,?,?)";
 
 
