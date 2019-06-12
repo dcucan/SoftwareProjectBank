@@ -1,5 +1,7 @@
 package bankband.bank.controllers;
 
+import bankband.bank.EventBus;
+import bankband.bank.events.NewTransactionCreated;
 import bankband.bank.models.Account;
 import bankband.bank.models.Transaction;
 import bankband.bank.models.TransactionType;
@@ -99,8 +101,9 @@ public class NewTransactionController implements Controller {
 
 
             SceneManager.get().activate("main");
-        } else {
 
+            EventBus.get().send(new NewTransactionCreated(transaction));
+        } else {
             fal.setText("Something went wrong");
         }
     }

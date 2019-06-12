@@ -1,5 +1,7 @@
 package bankband.bank.controllers;
 
+import bankband.bank.EventBus;
+import bankband.bank.events.NewTransactionCreated;
 import bankband.bank.models.Account;
 import bankband.bank.models.Card;
 import bankband.bank.models.Transaction;
@@ -38,6 +40,9 @@ public class MainController implements Controller {
         updateAccounts();
         updateCards();
 
+        EventBus.get().subscribe("transactioPrinter", NewTransactionCreated.class, e -> {
+            System.out.println("New transaction created: " + e.getTransaction().getAmount());
+        });
     }
 
     public void updateAccounts() {
@@ -115,5 +120,4 @@ public class MainController implements Controller {
     public void onNewCard(){
 
     }
-
 }

@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public static void main(String[] args) throws Exception {
+
+
         if(args.length == 1 && args[0].equals("install")) {
             Database.getInstance().install();
 
@@ -17,6 +19,8 @@ public class Main extends Application {
         } else {
             launch(args);
         }
+
+
 
         System.exit(0);
     }
