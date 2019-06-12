@@ -4,6 +4,7 @@ import bankband.bank.models.Account;
 import bankband.bank.models.Card;
 import bankband.bank.repositories.CardRepository;
 import bankband.bank.util.Password;
+import bankband.bank.util.SwitchImage;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -25,6 +26,7 @@ public class NewCardController implements Controller {
     NewCardController(Account account){
         this.account = account;
     }
+    private SwitchImage switchImage = new SwitchImage();
 
     @FXML
     private ImageView image;
@@ -48,7 +50,7 @@ public class NewCardController implements Controller {
     }
 
     public void onDesign(){
-        image.setImage(nameToImage(design.getSelectionModel().getSelectedItem()));
+        image.setImage(switchImage.nameToImage(design.getSelectionModel().getSelectedItem()));
     }
 
     public void onConfirm(){
@@ -76,11 +78,5 @@ public class NewCardController implements Controller {
 
     }
 
-    public Image nameToImage(String name) {
-        switch (name) {
-            case "Card": return new Image("images/card.png");
-            case "Nature": return new Image("images/nature.png");
-        }
-        return null;
-    }
+
 }
