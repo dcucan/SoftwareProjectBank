@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 
 public class CardController implements Controller {
 
-    Card card = new Card();
+    private Card card = new Card();
 
     CardController(Card card){
         this.card = card;

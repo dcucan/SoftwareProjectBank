@@ -1,5 +1,7 @@
 package bankband.bank.controllers;
 
+import bankband.bank.EventBus;
+import bankband.bank.events.NewTransactionCreated;
 import bankband.bank.models.Account;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,8 @@ import java.util.Random;
 
 
 public class AccountController implements Controller {
+
+    MainController mainController = new MainController();
 
     @Override
     public void initialize() {

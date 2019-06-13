@@ -1,10 +1,11 @@
 package bankband.bank.controllers;
 
 import bankband.bank.EventBus;
+import bankband.bank.events.NewAccountCreated;
+import bankband.bank.events.NewCardCreated;
 import bankband.bank.events.NewTransactionCreated;
 import bankband.bank.models.Account;
 import bankband.bank.models.Card;
-import bankband.bank.models.Transaction;
 import bankband.bank.models.User;
 import bankband.bank.repositories.AccountRepository;
 import bankband.bank.repositories.CardRepository;
@@ -40,8 +41,11 @@ public class MainController implements Controller {
         updateAccounts();
         updateCards();
 
-        EventBus.get().subscribe("transactioPrinter", NewTransactionCreated.class, e -> {
-            System.out.println("New transaction created: " + e.getTransaction().getAmount());
+        EventBus.get().subscribe("transactionPrinter", NewTransactionCreated.class, e -> {
+            updateAccounts();
+        });
+        EventBus.get().subscribe("cardCreated", NewCardCreated.class, event -> {
+            updateCards();
         });
     }
 
@@ -76,22 +80,24 @@ public class MainController implements Controller {
         for (Account acount : allAccounts){
 
             allCards = cardRepository.findAllForAccount(acount);
-        }
 
+            for (Card card : allCards ){
 
-        for (Card card : allCards ){
+                FXMLLoader loader = new FXMLLoader();
+                loader.setController(new CardController(card));
+                loader.setLocation(getClass().getClassLoader().getResource("card.fxml"));
 
-            FXMLLoader loader = new FXMLLoader();
-            loader.setController(new CardController(card));
-            loader.setLocation(getClass().getClassLoader().getResource("card.fxml"));
-
-            try {
-                Pane pane = loader.load();
-                cards.getItems().add(pane);
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    Pane pane = loader.load();
+                    cards.getItems().add(pane);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
+
+
     }
 
 

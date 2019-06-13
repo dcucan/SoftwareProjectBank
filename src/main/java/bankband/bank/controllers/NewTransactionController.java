@@ -100,7 +100,7 @@ public class NewTransactionController implements Controller {
             postCode.clear();
 
 
-            SceneManager.get().activate("main");
+
 
             EventBus.get().send(new NewTransactionCreated(transaction));
         } else {

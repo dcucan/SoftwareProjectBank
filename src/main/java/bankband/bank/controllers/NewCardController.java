@@ -1,5 +1,8 @@
 package bankband.bank.controllers;
 
+import bankband.bank.EventBus;
+import bankband.bank.events.NewCardCreated;
+import bankband.bank.events.NewTransactionCreated;
 import bankband.bank.models.Account;
 import bankband.bank.models.Card;
 import bankband.bank.repositories.CardRepository;
@@ -73,6 +76,7 @@ public class NewCardController implements Controller {
         } else {
             tru.setText("Succesful");
             image.setImage(null);
+            EventBus.get().send(new NewCardCreated(card));
         }
 
 
