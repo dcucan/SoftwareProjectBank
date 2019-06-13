@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TransactionTypeRepository {
@@ -82,15 +83,16 @@ public class TransactionTypeRepository {
         List<Transaction> allTransactions;
 
         for (Account account : allAccounts){
+
             allTransactions = transactionRepository.findAllForAccount(account);
             for (Transaction transaction : allTransactions){
-                list.add(findByTransaction(transaction));
-                System.out.println("Ac");
+                if (transactionRepository.isIncoming(transaction,account)==false) {
+                    list.add(findByTransaction(transaction));
+                }
             }
         }
         return list;
     }
-
 
     public ArrayList<String> getTypesString(){
         ArrayList<TransactionType> types = getAllTransactionTypesForUser();
@@ -102,6 +104,41 @@ public class TransactionTypeRepository {
 
         return list;
 
+    }
+
+    public HashMap getSpendsAlcohol(){
+        User user = Auth.get().getUser();
+        AccountRepository accountRepository = new AccountRepository();
+        List<TransactionType> types =  getAllTransactionTypesForUser();
+        List<Account> allAccounts = accountRepository.findAllForUser(user);
+        List<Transaction> allTransactions;
+        TransactionRepository transactionRepository = new TransactionRepository();
+
+        HashMap<String,Integer> typesMap = new HashMap<>();
+        alcohol = 0;
+        food = 0;
+
+        for (Account account : allAccounts){
+
+
+            allTransactions = transactionRepository.findAllForAccount(account);
+            for (Transaction transaction : allTransactions){
+                for (TransactionType type : types){
+                    if(transaction.getId()==type.getTransactionId().getId()){
+                        if(type.getType().contains("Alcohol")) {
+                            alcohol = alcohol + transaction.getAmount();
+                        }
+                        if (type.getType().contains("Food")){
+                            food = food + transaction.getAmount();
+                        }
+
+                    }
+                }
+            }
+        }
+        typesMap.put("Alcohol",alcohol);
+        typesMap.put("Food", food);
+        return typesMap;
     }
 
     public int getAlcohol(){

@@ -23,6 +23,7 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainController implements Controller {
@@ -38,6 +39,9 @@ public class MainController implements Controller {
 
     @FXML
     private PieChart pieChart;
+
+    @FXML
+    private PieChart pieChart1;
 
     private UserRepository userRepo = new UserRepository();
     private AccountRepository accountRepo = new AccountRepository();
@@ -115,6 +119,14 @@ public class MainController implements Controller {
         );
 
         pieChart.setData(list);
+
+        HashMap<String,Integer> map = repo.getSpendsAlcohol();
+        ObservableList<PieChart.Data>list2 = FXCollections.observableArrayList(
+                new PieChart.Data("Alcohol", map.get("Alcohol").intValue()),
+                new PieChart.Data("Food", map.get("Food").intValue())
+        );
+
+        pieChart1.setData(list2);
     }
 
 
