@@ -10,10 +10,7 @@ import bankband.bank.repositories.TransactionRepository;
 import bankband.bank.repositories.TransactionTypeRepository;
 import bankband.bank.services.SceneManager;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -70,6 +67,17 @@ public class NewTransactionController implements Controller {
         AccountRepository accountRepository = new AccountRepository();
         TransactionRepository transactionRepository = new TransactionRepository();
         TransactionTypeRepository transactionTypeRepository = new TransactionTypeRepository();
+
+        try {
+            Integer.parseInt(amount.getText());
+        } catch (Exception ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid input");
+            alert.setContentText("Please enter a valid amount!");
+            alert.showAndWait();
+            return;
+        }
 
         int cash = Integer.parseInt(amount.getText());
 

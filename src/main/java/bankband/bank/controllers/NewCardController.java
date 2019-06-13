@@ -70,7 +70,17 @@ public class NewCardController implements Controller {
         card.setCcv(random.nextInt(899)+100);
         card.setExpirationDate(new Date(2022));
         card.setImage(design.getSelectionModel().getSelectedItem());
-        card.setLimit(Integer.parseInt(limit.getText()));
+        try {
+            card.setLimit(Integer.parseInt(limit.getText()));
+        } catch (Exception ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid input");
+            alert.setContentText("Please enter a valid number!");
+            alert.showAndWait();
+            return;
+        }
+
         card.setPin(hash);
 
         if(repository.create(card)==null){
