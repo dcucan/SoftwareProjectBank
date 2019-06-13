@@ -51,7 +51,7 @@ public class NewCardController implements Controller {
     @Override
     public void initialize(){
         design.getItems().clear();
-        design.getItems().setAll("Card", "Nature");
+        design.getItems().setAll("Card", "Nature", "Gold");
     }
 
     public void onDesign(){
