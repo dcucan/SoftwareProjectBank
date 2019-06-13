@@ -7,6 +7,7 @@ import bankband.bank.services.Auth;
 import bankband.bank.services.SceneManager;
 import bankband.bank.util.Password;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -55,7 +56,11 @@ public class RegisterController implements Controller {
         user.setPassword(hash);
 
         if (userRepository.create(user) != null) {
-
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("New user successfully created!");
+            alert.showAndWait();
             Auth.get().setUser(user);
             SceneManager.get().activate("main");
         }

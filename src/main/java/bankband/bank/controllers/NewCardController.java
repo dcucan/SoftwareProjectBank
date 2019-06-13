@@ -6,17 +6,19 @@ import bankband.bank.events.NewTransactionCreated;
 import bankband.bank.models.Account;
 import bankband.bank.models.Card;
 import bankband.bank.repositories.CardRepository;
+import bankband.bank.services.SceneManager;
 import bankband.bank.util.Password;
 import bankband.bank.util.SwitchImage;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.Random;
+import java.lang.String;
 
 
 public class NewCardController implements Controller {
@@ -74,13 +76,14 @@ public class NewCardController implements Controller {
         if(repository.create(card)==null){
             fal.setText("Something went wrong");
         } else {
-            tru.setText("Succesful");
+            tru.setText("Success.");
             image.setImage(null);
             EventBus.get().send(new NewCardCreated(card));
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("New card successfully created!");
+            alert.showAndWait();
         }
-
-
     }
-
-
 }

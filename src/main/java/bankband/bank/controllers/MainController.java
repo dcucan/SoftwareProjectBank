@@ -132,7 +132,7 @@ public class MainController implements Controller {
 
 
     public void setName() {
-        name.setText(Auth.get().getUser().getName());
+        name.setText(Auth.get().getUser().getName() + " " + Auth.get().getUser().getSurname());
     }
 
     public void onLogout() throws IOException {
