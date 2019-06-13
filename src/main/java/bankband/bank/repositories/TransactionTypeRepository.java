@@ -1,18 +1,27 @@
 package bankband.bank.repositories;
 
 import bankband.bank.Database;
+import bankband.bank.models.Account;
 import bankband.bank.models.Transaction;
 import bankband.bank.models.TransactionType;
+import bankband.bank.models.User;
+import bankband.bank.services.Auth;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionTypeRepository {
 
 
     private Connection conn = Database.getInstance().getConnection();
+
+    private int alcohol;
+    private int food;
+
 
     public Integer create(TransactionType transactionType) {
         String sql = "INSERT INTO transaction_type(type, transaction_id)" +
@@ -62,6 +71,63 @@ public class TransactionTypeRepository {
         }
 
         return null;
+    }
+
+    public ArrayList<TransactionType> getAllTransactionTypesForUser(){
+        ArrayList<TransactionType> list = new ArrayList<>();
+        AccountRepository accountRepository = new AccountRepository();
+        TransactionRepository transactionRepository = new TransactionRepository();
+        User user = Auth.get().getUser();
+        List<Account> allAccounts = accountRepository.findAllForUser(user);
+        List<Transaction> allTransactions;
+
+        for (Account account : allAccounts){
+            allTransactions = transactionRepository.findAllForAccount(account);
+            for (Transaction transaction : allTransactions){
+                list.add(findByTransaction(transaction));
+                System.out.println("Ac");
+            }
+        }
+        return list;
+    }
+
+
+    public ArrayList<String> getTypesString(){
+        ArrayList<TransactionType> types = getAllTransactionTypesForUser();
+        ArrayList<String> list = new ArrayList<>();
+
+        for (TransactionType type : types){
+            list.add(type.getType());
+        }
+
+        return list;
+
+    }
+
+    public int getAlcohol(){
+        ArrayList<String> list = getTypesString();
+        alcohol = 0;
+
+        for (String string : list){
+            if (string.contains("Alcohol")){
+                alcohol++;
+            }
+        }
+
+        return alcohol;
+    }
+
+    public int getFood(){
+        ArrayList<String> list = getTypesString();
+        food = 0;
+
+        for (String string : list){
+            if (string.contains("Food")){
+                food++;
+            }
+        }
+
+        return food;
     }
 
 }

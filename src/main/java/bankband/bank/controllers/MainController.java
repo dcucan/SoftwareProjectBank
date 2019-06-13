@@ -1,7 +1,6 @@
 package bankband.bank.controllers;
 
 import bankband.bank.EventBus;
-import bankband.bank.events.NewAccountCreated;
 import bankband.bank.events.NewCardCreated;
 import bankband.bank.events.NewTransactionCreated;
 import bankband.bank.models.Account;
@@ -9,11 +8,15 @@ import bankband.bank.models.Card;
 import bankband.bank.models.User;
 import bankband.bank.repositories.AccountRepository;
 import bankband.bank.repositories.CardRepository;
+import bankband.bank.repositories.TransactionTypeRepository;
 import bankband.bank.repositories.UserRepository;
 import bankband.bank.services.Auth;
 import bankband.bank.services.SceneManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
@@ -33,6 +36,9 @@ public class MainController implements Controller {
     @FXML
     private ListView<Pane> cards;
 
+    @FXML
+    private PieChart pieChart;
+
     private UserRepository userRepo = new UserRepository();
     private AccountRepository accountRepo = new AccountRepository();
 
@@ -40,6 +46,7 @@ public class MainController implements Controller {
         setName();
         updateAccounts();
         updateCards();
+        updateChart();
 
         EventBus.get().subscribe("transactionPrinter", NewTransactionCreated.class, e -> {
             updateAccounts();
@@ -100,6 +107,16 @@ public class MainController implements Controller {
 
     }
 
+    public void updateChart(){
+        TransactionTypeRepository repo = new TransactionTypeRepository();
+        ObservableList<PieChart.Data>list = FXCollections.observableArrayList(
+                new PieChart.Data("Alcohol", repo.getAlcohol()),
+                new PieChart.Data("Food", repo.getFood())
+        );
+
+        pieChart.setData(list);
+    }
+
 
 
     public void setName() {
@@ -121,6 +138,8 @@ public class MainController implements Controller {
     public void onNewAccount() throws IOException {
         SceneManager.get().activate("newAccount");
     }
+
+
 
 
     public void onNewCard(){
