@@ -4,6 +4,7 @@ import bankband.bank.models.Account;
 import bankband.bank.repositories.AccountRepository;
 import bankband.bank.services.SceneManager;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 
@@ -25,7 +26,16 @@ public class NewAccountController implements Controller {
         account.setNumber(random.nextInt(9000000) + 1000000);
         account.setPostNumber(0100);
         accountRepository.create(account);
-        System.out.println("created");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText("New account successfully created!");
+        alert.showAndWait();
+        try {
+            onGoBack();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onGoBack() throws IOException {
