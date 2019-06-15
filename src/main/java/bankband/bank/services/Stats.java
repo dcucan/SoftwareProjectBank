@@ -3,69 +3,106 @@ package bankband.bank.services;
 import bankband.bank.models.Account;
 import bankband.bank.models.Transaction;
 import bankband.bank.models.TransactionType;
+import bankband.bank.models.User;
+import bankband.bank.repositories.AccountRepository;
+import bankband.bank.repositories.TransactionRepository;
+import bankband.bank.repositories.TransactionTypeRepository;
 
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 public class Stats {
 
-    public Map<TransactionType, Integer> getSpendingsPerType() {
-        Map<TransactionType, Integer> stats = new HashMap<>();
+    int alcohol;
+    int food;
 
-        //Get all accounts of a user
-        List<Account> accounts = Auth.get().getUser().getAccounts();
+    AccountRepository accountRepository = new AccountRepository();
+    TransactionRepository transactionRepository = new TransactionRepository();
+    TransactionTypeRepository transactionTypeRepository = new TransactionTypeRepository();
 
-        // Transform the list into stream for further manipulation
-        List<Transaction> outgoing = accounts.stream()
-                //transforms the list of accounts into a list of all transactions
-                .flatMap(account -> account.getOutgoingTransactions().stream())
-                // And finally collect the stream into a list of transactions
-                .collect(Collectors.toList());
+    public ArrayList<String> getTypesString() {
+        ArrayList<TransactionType> types = getAllTransactionTypesForUser();
+        ArrayList<String> list = new ArrayList<>();
 
-        // Loop through all of the outgoing transactions
-        for (Transaction transaction : outgoing) {
-
-            // Get already calculated sum of the given transactionType from the map or return 0 if there is no yet
-            int sum = stats.getOrDefault(transaction.getType(), 0);
-            // Increment the sum by the amount from the given transaction and put it back into the map
-            stats.put(transaction.getType(), sum + transaction.getAmount());
+        for (TransactionType type : types) {
+            list.add(type.getType());
         }
 
-        return stats;
+        return list;
+
     }
 
-    public Map<TransactionType, Integer> getNumberOfTransactionPerType() {
-        Map<TransactionType, Integer> stats = new HashMap<>();
+    public ArrayList<TransactionType> getAllTransactionTypesForUser() {
+        ArrayList<TransactionType> list = new ArrayList<>();
+        User user = Auth.get().getUser();
+        List<Account> allAccounts = accountRepository.findAllForUser(user);
+        List<Transaction> allTransactions;
 
-        //Get all accounts of a user
-        List<Account> accounts = Auth.get().getUser().getAccounts();
+        for (Account account : allAccounts) {
 
-        // Transform the list into stream for further manipulation
-        List<Transaction> outgoing = accounts.stream()
-                //transforms the list of accounts into a list of all transactions
-                .flatMap(account -> account.getOutgoingTransactions().stream())
-                // And finally collect the stream into a list of transactions
-                .collect(Collectors.toList());
-        Integer count = 1;
-
-        Set<String> keywordSet = new HashSet<>();
-        for (Transaction transaction : outgoing) {
-            keywordSet.add(transaction.getType().getType());
-
-        }
-
-        for (Transaction transaction : outgoing) {
-            if (keywordSet.contains(transaction.getType().getType())) {
-                stats.put(transaction.getType(), count++);
-            } else {
-                stats.put(transaction.getType(), count);
+            allTransactions = transactionRepository.findAllForAccount(account);
+            for (Transaction transaction : allTransactions) {
+                if (!transactionRepository.isIncoming(transaction, account)) {
+                    list.add(transactionTypeRepository.findByTransaction(transaction));
+                }
             }
+        }
+        return list;
+    }
 
-            System.out.println(count);
+    public HashMap getSpendsAlcohol() {
+        User user = Auth.get().getUser();
+        List<TransactionType> types = getAllTransactionTypesForUser();
+        List<Account> allAccounts = accountRepository.findAllForUser(user);
+        List<Transaction> allTransactions;
+        HashMap<String, Integer> typesMap = new HashMap<>();
+        alcohol = 0;
+        food = 0;
 
+        for (Account account : allAccounts) {
+
+            allTransactions = transactionRepository.findAllForAccount(account);
+            for (Transaction transaction : allTransactions) {
+                for (TransactionType type : types) {
+                    if (transaction.getId() == type.getTransactionId().getId()) {
+                        if (type.getType().contains("Alcohol")) {
+                            alcohol = alcohol + transaction.getAmount();
+                        }
+                        if (type.getType().contains("Food")) {
+                            food = food + transaction.getAmount();
+                        }
+                    }
+                }
+            }
+        }
+        typesMap.put("Alcohol", alcohol);
+        typesMap.put("Food", food);
+        return typesMap;
+    }
+
+    public int getAlcohol() {
+        ArrayList<String> list = getTypesString();
+        alcohol = 0;
+
+        for (String string : list) {
+            if (string.contains("Alcohol")) {
+                alcohol++;
+            }
         }
 
+        return alcohol;
+    }
 
-        return stats;
+    public int getFood() {
+        ArrayList<String> list = getTypesString();
+        food = 0;
+
+        for (String string : list) {
+            if (string.contains("Food")) {
+                food++;
+            }
+        }
+
+        return food;
     }
 }

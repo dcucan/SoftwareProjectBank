@@ -120,28 +120,24 @@ public class MainController implements Controller {
 
         Stats stats = new Stats();
 
-        Map<TransactionType,Integer> frequency = stats.getNumberOfTransactionPerType();
+        HashMap<String,Integer> map = stats.getSpendsAlcohol();
+        ObservableList<PieChart.Data>list2 = FXCollections.observableArrayList(
+                new PieChart.Data("Alcohol", map.get("Alcohol").intValue()),
+                new PieChart.Data("Food", map.get("Food").intValue())
+        );
 
-        List<PieChart.Data> freq = frequency.entrySet().stream()
+        pieChart1.setData(list2);
 
-                .map(entry -> new PieChart.Data(entry.getKey().getType(), entry.getValue()))
+        ObservableList<PieChart.Data>list = FXCollections.observableArrayList(
+                new PieChart.Data("Alcohol", stats.getAlcohol()),
+                new PieChart.Data("Food", stats.getFood())
+        );
 
-                .collect(Collectors.toList());
-
-        pieChart.setData(FXCollections.observableList(freq));
+        pieChart.setData(list);
 
 
 
-        // Get the map of spendings per transaction type from the stats service
-        Map<TransactionType, Integer> spendings = stats.getSpendingsPerType();
 
-        List<PieChart.Data> list = spendings.entrySet().stream()
-                // Transform (map) each entry into PieChart.Data
-                .map(entry -> new PieChart.Data(entry.getKey().getType(), entry.getValue()))
-                // And finally collect the newly created list of PieChart.Data into a list
-                .collect(Collectors.toList());
-
-        pieChart1.setData(FXCollections.observableList(list));
 
 
 
