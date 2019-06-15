@@ -1,5 +1,9 @@
 package bankband.bank.models;
 
+import bankband.bank.repositories.AccountRepository;
+
+import java.util.List;
+
 public class User {
 
     private Integer id;
@@ -51,4 +55,17 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public List<Account> getAccounts() {
+        return (new AccountRepository()).findAllForUser(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof User)) return false;
+
+        return ((User) o).getId() == this.getId();
+    }
+
 }

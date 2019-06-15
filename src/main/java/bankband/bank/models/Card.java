@@ -82,4 +82,13 @@ public class Card {
     public void setAccountId(Account accountId) {
         this.accountId = accountId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Card)) return false;
+
+        return ((Card) o).getId() == this.getId();
+    }
+
 }

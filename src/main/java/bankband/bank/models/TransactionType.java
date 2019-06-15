@@ -32,4 +32,13 @@ public class TransactionType {
     public void setTransactionId(Transaction transactionId) {
         this.transactionId = transactionId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof TransactionType)) return false;
+
+        return ((TransactionType) o).getId() == this.getId();
+    }
+
 }

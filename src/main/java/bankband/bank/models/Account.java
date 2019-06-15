@@ -1,5 +1,12 @@
 package bankband.bank.models;
 
+import bankband.bank.repositories.AccountRepository;
+import bankband.bank.repositories.TransactionRepository;
+import bankband.bank.services.Auth;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Account {
 
     private int id;
@@ -62,4 +69,27 @@ public class Account {
     public void setPostNumber(int postNumber) {
         this.postNumber = postNumber;
     }
+
+    public List<Transaction> getTransactions() {
+        return (new TransactionRepository()).findAllForAccount(this);
+    }
+
+
+    public List<Transaction> getOutgoingTransactions() {
+        return getTransactions().stream()
+                .filter(transaction -> transaction.getFromAccount().equals(this))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Account)) return false;
+
+        return ((Account) o).getId() == this.getId();
+    }
+
+
+
+
 }

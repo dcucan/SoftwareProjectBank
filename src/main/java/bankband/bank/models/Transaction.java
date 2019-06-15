@@ -1,5 +1,7 @@
 package bankband.bank.models;
 
+import bankband.bank.repositories.TransactionTypeRepository;
+
 import java.util.Date;
 
 public class Transaction {
@@ -54,6 +56,18 @@ public class Transaction {
 
     public void setToAccount(Account toAccount) {
         this.toAccount = toAccount;
+    }
+
+    public TransactionType getType() {
+        return (new TransactionTypeRepository()).findByTransaction(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Transaction)) return false;
+
+        return ((Transaction) o).getId() == this.getId();
     }
 
 

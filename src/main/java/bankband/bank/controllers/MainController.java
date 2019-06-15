@@ -5,6 +5,7 @@ import bankband.bank.events.NewCardCreated;
 import bankband.bank.events.NewTransactionCreated;
 import bankband.bank.models.Account;
 import bankband.bank.models.Card;
+import bankband.bank.models.TransactionType;
 import bankband.bank.models.User;
 import bankband.bank.repositories.AccountRepository;
 import bankband.bank.repositories.CardRepository;
@@ -12,6 +13,7 @@ import bankband.bank.repositories.TransactionTypeRepository;
 import bankband.bank.repositories.UserRepository;
 import bankband.bank.services.Auth;
 import bankband.bank.services.SceneManager;
+import bankband.bank.services.Stats;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,6 +27,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MainController implements Controller {
 
@@ -54,6 +58,7 @@ public class MainController implements Controller {
 
         EventBus.get().subscribe("transactionPrinter", NewTransactionCreated.class, e -> {
             updateAccounts();
+            updateChart();
         });
         EventBus.get().subscribe("cardCreated", NewCardCreated.class, event -> {
             updateCards();
@@ -112,21 +117,34 @@ public class MainController implements Controller {
     }
 
     public void updateChart(){
-        TransactionTypeRepository repo = new TransactionTypeRepository();
-        ObservableList<PieChart.Data>list = FXCollections.observableArrayList(
-                new PieChart.Data("Alcohol", repo.getAlcohol()),
-                new PieChart.Data("Food", repo.getFood())
-        );
 
-        pieChart.setData(list);
+        Stats stats = new Stats();
 
-        HashMap<String,Integer> map = repo.getSpendsAlcohol();
-        ObservableList<PieChart.Data>list2 = FXCollections.observableArrayList(
-                new PieChart.Data("Alcohol", map.get("Alcohol").intValue()),
-                new PieChart.Data("Food", map.get("Food").intValue())
-        );
+        Map<TransactionType,Integer> frequency = stats.getNumberOfTransactionPerType();
 
-        pieChart1.setData(list2);
+        List<PieChart.Data> freq = frequency.entrySet().stream()
+
+                .map(entry -> new PieChart.Data(entry.getKey().getType(), entry.getValue()))
+
+                .collect(Collectors.toList());
+
+        pieChart.setData(FXCollections.observableList(freq));
+
+
+
+        // Get the map of spendings per transaction type from the stats service
+        Map<TransactionType, Integer> spendings = stats.getSpendingsPerType();
+
+        List<PieChart.Data> list = spendings.entrySet().stream()
+                // Transform (map) each entry into PieChart.Data
+                .map(entry -> new PieChart.Data(entry.getKey().getType(), entry.getValue()))
+                // And finally collect the newly created list of PieChart.Data into a list
+                .collect(Collectors.toList());
+
+        pieChart1.setData(FXCollections.observableList(list));
+
+
+
     }
 
 
