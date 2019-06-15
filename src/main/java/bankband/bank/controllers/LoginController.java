@@ -7,6 +7,7 @@ import bankband.bank.services.SceneManager;
 import bankband.bank.util.Password;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class LoginController implements Controller {
     private TextField email;
 
     @FXML
-    private TextField password;
+    private PasswordField password;
 
     @FXML
     private Label info;

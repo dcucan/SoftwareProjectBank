@@ -13,12 +13,12 @@ import java.util.*;
 
 public class Stats {
 
-    int alcohol;
-    int food;
+    private int alcohol;
+    private int food;
 
-    AccountRepository accountRepository = new AccountRepository();
-    TransactionRepository transactionRepository = new TransactionRepository();
-    TransactionTypeRepository transactionTypeRepository = new TransactionTypeRepository();
+    private AccountRepository accountRepository = new AccountRepository();
+    private TransactionRepository transactionRepository = new TransactionRepository();
+    private TransactionTypeRepository transactionTypeRepository = new TransactionTypeRepository();
 
     public ArrayList<String> getTypesString() {
         ArrayList<TransactionType> types = getAllTransactionTypesForUser();

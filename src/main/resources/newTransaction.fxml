@@ -4,28 +4,34 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="538.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="378.0" style="-fx-background-color: #05c5ff#05c5ff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="149.0" layoutY="100.0" text="Account number:">
+      <Label layoutX="66.0" layoutY="101.0" text="Account number:">
          <font>
             <Font name="Lucida Grande" size="13.0" />
          </font></Label>
-      <Label layoutX="312.0" layoutY="124.0" text="/" />
-      <TextField fx:id="number" layoutX="146.0" layoutY="117.0" prefHeight="27.0" prefWidth="161.0" promptText="Type  account number" />
-      <TextField fx:id="postCode" layoutX="324.0" layoutY="117.0" prefHeight="27.0" prefWidth="87.0" promptText="Bank code" />
-      <Label layoutX="150.0" layoutY="164.0" text="Amount:" />
-      <TextField fx:id="amount" layoutX="151.0" layoutY="181.0" prefHeight="27.0" prefWidth="161.0" promptText="EUR" />
-      <Label layoutX="151.0" layoutY="238.0" text="Type of transaction:" />
-      <Button layoutX="183.0" layoutY="321.0" mnemonicParsing="false" onAction="#onConfirm" styleClass="success" text="Confirm" />
-      <Label fx:id="tru" layoutX="153.0" layoutY="293.0" prefHeight="17.0" prefWidth="148.0" textAlignment="CENTER" textFill="#24d611">
+      <Label layoutX="232.0" layoutY="124.0" prefHeight="17.0" prefWidth="16.0" text="/" />
+      <TextField fx:id="number" layoutX="69.0" layoutY="117.0" prefHeight="27.0" prefWidth="161.0" promptText="Type  account number" />
+      <TextField fx:id="postCode" layoutX="240.0" layoutY="117.0" prefHeight="27.0" prefWidth="87.0" promptText="Bank code" />
+      <Label layoutX="69.0" layoutY="168.0" text="Amount:" />
+      <TextField fx:id="amount" layoutX="69.0" layoutY="185.0" prefHeight="27.0" prefWidth="161.0" promptText="EUR" />
+      <Label layoutX="69.0" layoutY="238.0" text="Type of transaction:" />
+      <Button layoutX="112.0" layoutY="321.0" mnemonicParsing="false" onAction="#onConfirm" styleClass="success" text="Confirm" />
+      <Label fx:id="tru" layoutX="79.0" layoutY="294.0" prefHeight="17.0" prefWidth="148.0" textAlignment="CENTER" textFill="#24d611">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="fal" layoutX="152.0" layoutY="293.0" prefHeight="17.0" prefWidth="148.0" textAlignment="CENTER" textFill="#fc1f1f" />
-      <ComboBox fx:id="transactionType" layoutX="151.0" layoutY="255.0" onAction="#onTransactionType" prefWidth="161.0" />
+      <Label fx:id="fal" layoutX="79.0" layoutY="294.0" prefHeight="17.0" prefWidth="148.0" textAlignment="CENTER" textFill="#fc1f1f" />
+      <ComboBox fx:id="transactionType" layoutX="69.0" layoutY="255.0" onAction="#onTransactionType" prefWidth="161.0" />
+      <Pane layoutX="-9.0" prefHeight="78.0" prefWidth="388.0" style="-fx-background-color: #ffffff;">
+         <effect>
+            <InnerShadow height="255.0" radius="124.66" width="245.64" />
+         </effect>
+      </Pane>
    </children>
 </Pane>

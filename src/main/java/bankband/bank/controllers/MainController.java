@@ -85,6 +85,8 @@ public class MainController implements Controller {
 
     public void updateCards(){
 
+        cards.getItems().clear();
+
         CardRepository cardRepository = new CardRepository();
         AccountRepository accountRepository = new AccountRepository();
 

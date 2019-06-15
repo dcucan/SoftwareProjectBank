@@ -4,22 +4,31 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="289.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="289.0" prefWidth="478.0" style="-fx-background-color: #05c5ff#05c5ff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="46.0" layoutY="81.0" prefHeight="17.0" prefWidth="65.0" text="Limit:" />
-      <TextField fx:id="limit" layoutX="46.0" layoutY="98.0" prefHeight="27.0" prefWidth="126.0" />
-      <Pane layoutX="196.0" layoutY="59.0" prefHeight="171.0" prefWidth="224.0" style="-fx-background-color: #ffffff;">
+      <TextField fx:id="limit" layoutX="46.0" layoutY="98.0" prefHeight="27.0" prefWidth="126.0" promptText="Limit" />
+      <Pane layoutX="196.0" layoutY="59.0" prefHeight="171.0" prefWidth="224.0" style="-fx-background-color: #05c5ff#05c5ff;">
          <children>
             <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="12.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
       <Button layoutX="65.0" layoutY="230.0" mnemonicParsing="false" onAction="#onConfirm" text="Confirm" />
-      <ComboBox fx:id="design" layoutX="48.0" layoutY="155.0" onAction="#onDesign" prefHeight="27.0" prefWidth="126.0" />
+      <ComboBox fx:id="design" layoutX="48.0" layoutY="155.0" onAction="#onDesign" prefHeight="27.0" prefWidth="126.0" promptText="Design" />
       <Label layoutX="48.0" layoutY="136.0" text="Design:" />
       <Label fx:id="fal" layoutX="43.0" layoutY="199.0" prefHeight="17.0" prefWidth="146.0" textFill="RED" />
       <Label fx:id="tru" layoutX="73.0" layoutY="199.0" prefHeight="17.0" prefWidth="81.0" textFill="#0bee16" />
+      <Pane layoutX="-4.0" layoutY="-6.0" prefHeight="47.0" prefWidth="486.0" style="-fx-background-color: #ffffff;">
+         <effect>
+            <InnerShadow height="166.72" radius="53.3225" width="48.57" />
+         </effect>
+      </Pane>
    </children>
+   <effect>
+      <InnerShadow height="84.75" radius="38.08" width="69.57" />
+   </effect>
 </Pane>

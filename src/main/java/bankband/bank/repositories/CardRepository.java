@@ -3,6 +3,7 @@ package bankband.bank.repositories;
 import bankband.bank.Database;
 import bankband.bank.models.Account;
 import bankband.bank.models.Card;
+import bankband.bank.services.Auth;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,7 +51,11 @@ public class CardRepository {
         ArrayList<Card> list = new ArrayList<>();
         AccountRepository repo = new AccountRepository();
 
+        List<Account> accounts = Auth.get().getUser().getAccounts();
+
         String sql = "SELECT * FROM cards WHERE account_id = ?";
+
+
 
         try {
 

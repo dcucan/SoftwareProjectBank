@@ -2,21 +2,29 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="381.0" prefWidth="338.0" style="-fx-background-color: #05c5ff#05c5ff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button layoutX="31.0" layoutY="26.0" mnemonicParsing="false" onAction="#onBackTo" prefWidth="118.0" text="Back to login " />
-      <TextField fx:id="name" layoutX="209.0" layoutY="96.0" />
-      <TextField fx:id="surname" layoutX="209.0" layoutY="149.0" />
-      <TextField fx:id="email" layoutX="209.0" layoutY="200.0" />
-      <TextField fx:id="password" layoutX="209.0" layoutY="250.0" />
-      <Button layoutX="263.0" layoutY="317.0" mnemonicParsing="false" onAction="#onRegister" text="Register" />
-      <Label layoutX="90.0" layoutY="103.0" text="First name" />
-      <Label layoutX="90.0" layoutY="156.0" text="Last name:" />
-      <Label layoutX="90.0" layoutY="207.0" text="E-mail:" />
-      <Label layoutX="90.0" layoutY="257.0" text="Password:" />
-      <Label fx:id="registr" layoutX="225.0" layoutY="290.0" prefHeight="17.0" prefWidth="139.0" textFill="#07e30d" />
+      <TextField fx:id="name" cache="true" depthTest="ENABLE" layoutX="85.0" layoutY="94.0" promptText="Name" />
+      <TextField fx:id="surname" layoutX="85.0" layoutY="147.0" promptText="Surname" />
+      <TextField fx:id="email" layoutX="85.0" layoutY="200.0" promptText="Email" />
+      <Button layoutX="131.0" layoutY="316.0" mnemonicParsing="false" onAction="#onRegister" styleClass="success" text="Register" />
+      <Label fx:id="registr" layoutX="100.0" layoutY="289.0" prefHeight="17.0" prefWidth="139.0" textFill="#07e30d" />
+      <PasswordField fx:id="password" layoutX="85.0" layoutY="250.0" promptText="Password" />
+      <Pane prefHeight="62.0" prefWidth="338.0" style="-fx-background-color: #ffffff;">
+         <effect>
+            <InnerShadow height="255.0" radius="68.5" />
+         </effect>
+         <children>
+            <Button layoutX="110.0" layoutY="16.0" mnemonicParsing="false" onAction="#onBackTo" prefWidth="118.0" text="Back to login " />
+         </children>
+      </Pane>
    </children>
+   <effect>
+      <InnerShadow height="72.61" radius="31.25" width="54.39" />
+   </effect>
 </Pane>

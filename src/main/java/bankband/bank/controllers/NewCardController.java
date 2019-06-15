@@ -2,20 +2,16 @@ package bankband.bank.controllers;
 
 import bankband.bank.EventBus;
 import bankband.bank.events.NewCardCreated;
-import bankband.bank.events.NewTransactionCreated;
 import bankband.bank.models.Account;
 import bankband.bank.models.Card;
 import bankband.bank.repositories.CardRepository;
-import bankband.bank.services.SceneManager;
 import bankband.bank.util.Password;
 import bankband.bank.util.SwitchImage;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
-import java.io.IOException;
+
 import java.sql.Date;
 import java.util.Random;
 import java.lang.String;

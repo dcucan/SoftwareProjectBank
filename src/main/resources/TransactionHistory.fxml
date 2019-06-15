@@ -2,17 +2,27 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="319.0" prefWidth="600.0" style="-fx-background-color: #05c5ff#05c5ff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="171.0" layoutY="14.0" text="History of transactions">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <ListView fx:id="transactions" layoutX="21.0" layoutY="74.0" prefHeight="214.0" prefWidth="558.0" />
+      <ListView fx:id="transactions" layoutX="21.0" layoutY="64.0" prefHeight="241.0" prefWidth="558.0" />
+      <Pane layoutX="-5.0" prefHeight="45.0" prefWidth="610.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Label layoutX="170.0" layoutY="8.0" text="History of transactions">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <InnerShadow height="139.39" radius="39.5975" />
+         </effect>
+      </Pane>
    </children>
+   <effect>
+      <InnerShadow height="63.5" radius="20.625" />
+   </effect>
 </Pane>
