@@ -29,10 +29,8 @@ public class DatabaseTest {
 
     @Test
     public void installationCanBeExecutedTwoTimes() throws Exception {
-        Database.getInstance().install();
-        Database.getInstance().install();
-
-        assertTrue(true);
+        assertTrue(Database.getInstance().install());
+        assertTrue(Database.getInstance().install());
     }
 
 }

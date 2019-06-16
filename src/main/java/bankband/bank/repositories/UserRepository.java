@@ -3,10 +3,7 @@ package bankband.bank.repositories;
 import bankband.bank.Database;
 import bankband.bank.models.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,29 +91,30 @@ public class UserRepository {
         String sql = "INSERT INTO users (first_name, last_name, email, password)"
                 + "VALUES (?, ?, ?, ?);";
 
-
         try {
-
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getSurname());
             stmt.setString(3, user.getEmail());
             stmt.setString(4, user.getPassword());
+
             stmt.execute();
-
-            sql = "SELECT last_insert_rowid();";
-            stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-            user.setId(rs.getInt(1));
-            return user.getId();
-
         } catch (SQLException e) {
             e.printStackTrace();
-
+            return null;
         }
 
+        sql = "SELECT last_insert_rowid();";
+        try {
+            Statement stmnt = conn.createStatement();
+            ResultSet rs = stmnt.executeQuery(sql);
 
-        return null;
+            user.setId(rs.getInt(1));
+            return user.getId();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public boolean update(User user) {

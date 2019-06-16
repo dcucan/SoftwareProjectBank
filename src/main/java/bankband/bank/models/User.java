@@ -61,6 +61,11 @@ public class User {
     }
 
     @Override
+    public String toString() {
+        return "User ID: " + id + ", name: " + name + ", surname: " + surname;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o == this) return true;
         if (!(o instanceof User)) return false;

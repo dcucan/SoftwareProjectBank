@@ -32,6 +32,9 @@ public class RegisterController implements Controller {
     @FXML
     private PasswordField password;
 
+    @FXML
+    private PasswordField passwordConfirmation;
+
 
     @Override
     public void initialize() {
@@ -40,6 +43,8 @@ public class RegisterController implements Controller {
         password.clear();
         surname.clear();
         name.clear();
+        passwordConfirmation.clear();
+
     }
 
 
@@ -49,12 +54,24 @@ public class RegisterController implements Controller {
      */
     public void onRegister() throws IOException {
 
+        if(name.getText().trim().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid input");
+            alert.setContentText("Please enter a Name!");
+            alert.showAndWait();
+            return;
+        }
 
-        String hash = Password.hashPassword(password.getText());
+        if(surname.getText().trim().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid input");
+            alert.setContentText("Please enter a Surname!");
+            alert.showAndWait();
+            return;
+        }
 
-        User user = new User();
-        user.setName(name.getText());
-        user.setSurname(surname.getText());
         if(!email.getText().matches("^(.*@.*\\..+)$")){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -72,6 +89,22 @@ public class RegisterController implements Controller {
             alert.showAndWait();
             return;
         }
+
+        if(!passwordConfirmation.getText().equals(password.getText())){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid input");
+            alert.setContentText("Passwords do not match!");
+            alert.showAndWait();
+            return;
+        }
+
+
+        String hash = Password.hashPassword(password.getText());
+
+        User user = new User();
+        user.setName(name.getText());
+        user.setSurname(surname.getText());
 
         user.setEmail(email.getText());
         user.setPassword(hash);
