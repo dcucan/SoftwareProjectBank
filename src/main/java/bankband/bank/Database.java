@@ -60,7 +60,7 @@ public class Database {
     }
 
     /**
-     * Přečte SQL z init.sql a vytvoří databázi v db
+     * Přečte SQL z init.sql a vytvoří databázi v database.sqlite
      */
     public boolean install() {
         Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("init.sql"));

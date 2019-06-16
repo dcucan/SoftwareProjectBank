@@ -7,14 +7,15 @@
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="381.0" prefWidth="338.0" style="-fx-background-color: #05c5ff#05c5ff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="381.0" prefWidth="338.0" style="-fx-background-color: #05c5ff#05c5ff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="name" cache="true" depthTest="ENABLE" layoutX="85.0" layoutY="94.0" promptText="Name" />
       <TextField fx:id="surname" layoutX="85.0" layoutY="147.0" promptText="Surname" />
       <TextField fx:id="email" layoutX="85.0" layoutY="200.0" promptText="Email" />
-      <Button layoutX="131.0" layoutY="316.0" mnemonicParsing="false" onAction="#onRegister" styleClass="success" text="Register" />
+      <Button layoutX="133.0" layoutY="334.0" mnemonicParsing="false" onAction="#onRegister" styleClass="success" text="Register" />
       <Label fx:id="registr" layoutX="100.0" layoutY="289.0" prefHeight="17.0" prefWidth="139.0" textFill="#07e30d" />
       <PasswordField fx:id="password" layoutX="85.0" layoutY="250.0" promptText="Password" />
+      <PasswordField fx:id="passwordConfirmation" layoutX="85.0" layoutY="293.0" promptText="Password confirmation" />
       <Pane prefHeight="62.0" prefWidth="338.0" style="-fx-background-color: #ffffff;">
          <effect>
             <InnerShadow height="255.0" radius="68.5" />
