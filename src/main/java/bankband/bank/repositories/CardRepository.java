@@ -91,7 +91,7 @@ public class CardRepository {
 
     }
 
-    public void update(Card card){
+    public boolean update(Card card){
         String sql = "UPDATE cards SET number = ?, expiration = ?, ccv = ? , pin = ?, image = ?, account_id = ?, card_limit =?" +
                 " WHERE id = ? ";
 
@@ -108,9 +108,29 @@ public class CardRepository {
             stmt.setInt(8, card.getId());
             stmt.execute();
 
+
+
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+
+        return true;
+    }
+
+    public boolean delete(Card card){
+        String sql = "DELETE FROM cards WHERE id = ?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, card.getId());
+            stmt.execute();
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
 

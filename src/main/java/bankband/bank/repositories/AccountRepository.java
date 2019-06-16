@@ -2,6 +2,7 @@ package bankband.bank.repositories;
 
 import bankband.bank.Database;
 import bankband.bank.models.Account;
+import bankband.bank.models.Card;
 import bankband.bank.models.User;
 import bankband.bank.services.Auth;
 
@@ -150,6 +151,21 @@ public class AccountRepository {
             return false;
         }
 
+        return true;
+    }
+
+    public boolean delete(Account account){
+        String sql = "DELETE FROM accounts WHERE id = ?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, account.getId());
+            stmt.execute();
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 }

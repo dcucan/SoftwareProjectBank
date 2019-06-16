@@ -106,6 +106,8 @@ public class EditController implements Controller {
             oldpassword.clear();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Succsessful");
+            alert.setHeaderText(null);
+            alert.setContentText("Profile successfully edited");
             alert.showAndWait();
 
         } else {
@@ -121,12 +123,23 @@ public class EditController implements Controller {
 
         List<Account> accounts = Auth.get().getUser().getAccounts();
 
-        for (Account account : accounts){
+        for (Account account : accounts) {
 
-            if(number==account.getNumber()){
-                if(type.getText().length() >= 2){
+            if (number == account.getNumber()) {
+                if (type.getText().length() >= 2) {
                     account.setType(type.getText());
-                    accountRepo.update(account);
+                    if (accountRepo.update(account)) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Success");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Account successfully edited");
+                        alert.showAndWait();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setContentText("Something went wrong");
+                        alert.showAndWait();
+                    }
                 }
             }
         }
@@ -134,25 +147,25 @@ public class EditController implements Controller {
 
     }
 
-    public void onChooseCard(){
-      int number = Integer.parseInt(card.getSelectionModel().getSelectedItem());
+    public void onChooseCard() {
+        int number = Integer.parseInt(card.getSelectionModel().getSelectedItem());
 
         List<Account> accounts = Auth.get().getUser().getAccounts();
         List<Card> cards;
 
-        for (Account account : accounts){
-                cards = cardRepo.findAllForAccount(account);
+        for (Account account : accounts) {
+            cards = cardRepo.findAllForAccount(account);
 
-                for (Card card : cards){
-                    if(number == card.getNumber()){
-                        image.setImage(switchImage.nameToImage(card.getImage()));
-                    }
+            for (Card card : cards) {
+                if (number == card.getNumber()) {
+                    image.setImage(switchImage.nameToImage(card.getImage()));
                 }
+            }
         }
 
     }
 
-    public void onDesign(){
+    public void onDesign() {
         image.setImage(switchImage.nameToImage(design.getSelectionModel().getSelectedItem()));
     }
 
@@ -161,55 +174,113 @@ public class EditController implements Controller {
         List<Account> accounts = Auth.get().getUser().getAccounts();
         List<Card> cards;
 
-        for (Account account : accounts){
+        for (Account account : accounts) {
             cards = cardRepo.findAllForAccount(account);
 
-            for (Card card : cards){
-                if(cardNumber == card.getNumber()){
+            for (Card card : cards) {
+                if (cardNumber == card.getNumber()) {
 
-                    if(limit.getText().length() >= 2){
+                    if (limit.getText().length() >= 2) {
                         System.out.println("Suc");
                         card.setLimit(Integer.parseInt(limit.getText()));
 
                     }
-                    if (design.getSelectionModel().getSelectedItem()!=null){
+                    if (design.getSelectionModel().getSelectedItem() != null) {
                         card.setImage(design.getSelectionModel().getSelectedItem());
                     }
 
-                    cardRepo.update(card);
+                    if (cardRepo.update(card)) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Success");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Card successfully edited");
+                        alert.showAndWait();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setContentText("Something went wrong");
+                        alert.showAndWait();
+                    }
                 }
             }
         }
 
 
-
     }
 
     public void onDeleteAccount() {
+        int number = Integer.parseInt(account.getSelectionModel().getSelectedItem());
+
+        List<Account> accounts = Auth.get().getUser().getAccounts();
+
+        for (Account account : accounts) {
+
+            if (number == account.getNumber()) {
+                if (accountRepo.delete(account)) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Account successfully deleted");
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Something went wrong");
+                    alert.showAndWait();
+
+                }
+            }
+        }
     }
 
     public void onDeleteCard() {
+
+        int cardNumber = Integer.parseInt(card.getSelectionModel().getSelectedItem());
+        List<Account> accounts = Auth.get().getUser().getAccounts();
+        List<Card> cards;
+
+        for (Account account : accounts) {
+            cards = cardRepo.findAllForAccount(account);
+
+            for (Card card : cards) {
+                if (cardNumber == card.getNumber()) {
+
+                    if (cardRepo.delete(card)) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Success");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Card successfully deleted");
+                        alert.showAndWait();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setContentText("Something went wrong");
+                        alert.showAndWait();
+
+                    }
+                }
+            }
+        }
     }
 
-    public void setUp(){
+    public void setUp() {
         List<Account> accounts = Auth.get().getUser().getAccounts();
         List<String> accountNumbers = new ArrayList<>();
         List<String> cardNumbers = new ArrayList<>();
         List<Card> cards;
 
-        for (Account account : accounts){
-            accountNumbers.add(account.getNumber()+"");
+        for (Account account : accounts) {
+            accountNumbers.add(account.getNumber() + "");
             cards = cardRepo.findAllForAccount(account);
 
-            for (Card card : cards){
-                cardNumbers.add(card.getNumber()+"");
+            for (Card card : cards) {
+                cardNumbers.add(card.getNumber() + "");
             }
         }
 
         account.getItems().setAll(accountNumbers);
         card.getItems().setAll(cardNumbers);
         design.getItems().setAll("Card", "Nature", "Gold");
-
 
 
     }
