@@ -53,7 +53,6 @@ public class CardRepository {
         String sql = "SELECT * FROM cards WHERE account_id = ?";
 
 
-
         try {
 
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -88,23 +87,22 @@ public class CardRepository {
 
     }
 
-    public boolean update(Card card){
+    public boolean update(Card card) {
         String sql = "UPDATE cards SET number = ?, expiration = ?, ccv = ? , pin = ?, image = ?, account_id = ?, card_limit =?" +
                 " WHERE id = ? ";
 
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            stmt.setInt(1,card.getNumber());
-            stmt.setDate(2, card.getExpirationDate());
+            stmt.setInt(1, card.getNumber());
+            stmt.setDate(2, new Date(card.getExpirationDate().getTime()));
             stmt.setInt(3, card.getCcv());
             stmt.setString(4, card.getPin());
-            stmt.setString(5,card.getImage());
-            stmt.setInt(6, card.getAccountId().getId());
+            stmt.setString(5, card.getImage());
+            stmt.setInt(6, card.getAccount().getId());
             stmt.setInt(7, card.getLimit());
             stmt.setInt(8, card.getId());
             stmt.execute();
-
 
 
         } catch (SQLException e) {
@@ -115,7 +113,7 @@ public class CardRepository {
         return true;
     }
 
-    public boolean delete(Card card){
+    public boolean delete(Card card) {
         String sql = "DELETE FROM cards WHERE id = ?";
 
         try {
@@ -123,7 +121,7 @@ public class CardRepository {
 
             stmt.setInt(1, card.getId());
             stmt.execute();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
