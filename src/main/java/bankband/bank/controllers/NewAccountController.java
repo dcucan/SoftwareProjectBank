@@ -22,9 +22,9 @@ public class NewAccountController implements Controller {
     public void onCreate() {
         Account account = new Account();
         account.setType(type.getText());
-        account.setBalance(00);
+        account.setBalance(0);
         account.setNumber(random.nextInt(9000000) + 1000000);
-        account.setPostNumber(0100);
+        account.setPostNumber(6400);
         accountRepository.create(account);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Success");
