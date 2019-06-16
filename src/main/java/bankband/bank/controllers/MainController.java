@@ -2,10 +2,7 @@ package bankband.bank.controllers;
 
 import bankband.bank.EventBus;
 import bankband.bank.events.*;
-import bankband.bank.models.Account;
-import bankband.bank.models.Card;
-import bankband.bank.models.TransactionType;
-import bankband.bank.models.User;
+import bankband.bank.models.*;
 import bankband.bank.repositories.AccountRepository;
 import bankband.bank.repositories.CardRepository;
 import bankband.bank.repositories.TransactionTypeRepository;
@@ -45,9 +42,6 @@ public class MainController implements Controller {
 
     @FXML
     private PieChart pieChart;
-
-    @FXML
-    private PieChart pieChart1;
 
     private UserRepository userRepo = new UserRepository();
     private AccountRepository accountRepo = new AccountRepository();
@@ -130,11 +124,11 @@ public class MainController implements Controller {
 
         List<Card> allCards = new ArrayList<>();
 
-        for (Account acount : allAccounts){
+        for (Account acount : allAccounts) {
 
             allCards = cardRepository.findAllForAccount(acount);
 
-            for (Card card : allCards ){
+            for (Card card : allCards) {
 
                 FXMLLoader loader = new FXMLLoader();
                 loader.setController(new CardController(card));
@@ -150,33 +144,19 @@ public class MainController implements Controller {
         }
 
 
-
     }
 
-    /**
-     * Aktualizují se piecharty
-     */
-    public void updateChart(){
+    public void updateChart() {
+        pieChart.getData().clear();
 
         Stats stats = new Stats();
+        Map<TransactionType, Integer> spendingsPerType = stats.getSpendingsPerType();
 
-        HashMap<String,Integer> map = stats.getSpendsAlcohol();
-        ObservableList<PieChart.Data>list2 = FXCollections.observableArrayList(
-                new PieChart.Data("Alcohol", map.get("Alcohol").intValue()),
-                new PieChart.Data("Food", map.get("Food").intValue())
-        );
-
-        pieChart1.setData(list2);
-
-        ObservableList<PieChart.Data>list = FXCollections.observableArrayList(
-                new PieChart.Data("Alcohol", stats.getAlcohol()),
-                new PieChart.Data("Food", stats.getFood())
-        );
-
-        pieChart.setData(list);
-
+        for (Map.Entry<TransactionType, Integer> entry : spendingsPerType.entrySet()) {
+            PieChart.Data data = new PieChart.Data(entry.getKey().getName(), entry.getValue());
+            pieChart.getData().add(data);
+        }
     }
-
 
 
     public void setName() {
@@ -198,8 +178,6 @@ public class MainController implements Controller {
     public void onNewAccount() throws IOException {
         SceneManager.get().activate("newAccount");
     }
-
-
 
 
     public void onEdit() throws IOException {

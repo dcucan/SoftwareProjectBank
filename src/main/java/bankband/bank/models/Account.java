@@ -4,6 +4,7 @@ import bankband.bank.repositories.AccountRepository;
 import bankband.bank.repositories.TransactionRepository;
 import bankband.bank.services.Auth;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,11 +75,16 @@ public class Account {
         return (new TransactionRepository()).findAllForAccount(this);
     }
 
-
     public List<Transaction> getOutgoingTransactions() {
-        return getTransactions().stream()
-                .filter(transaction -> transaction.getFromAccount().equals(this))
-                .collect(Collectors.toList());
+        List<Transaction> outgoingTransactions = new ArrayList<>();
+
+        for (Transaction transaction : getTransactions()) {
+            if (transaction.getFromAccount().equals(this)) {
+                outgoingTransactions.add(transaction);
+            }
+        }
+
+        return outgoingTransactions;
     }
 
     @Override
@@ -88,8 +94,6 @@ public class Account {
 
         return ((Account) o).getId() == this.getId();
     }
-
-
 
 
 }

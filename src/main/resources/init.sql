@@ -1,7 +1,7 @@
 PRAGMA foreign_keys = ON;
 
 DROP TABLE IF EXISTS cards;
-DROP TABLE IF EXISTS transaction_type;
+DROP TABLE IF EXISTS transaction_types;
 DROP TABLE IF EXISTS transactions;
 DROP TABLE IF EXISTS accounts;
 DROP TABLE IF EXISTS users;
@@ -30,17 +30,16 @@ CREATE TABLE transactions (
     date_time INTEGER NOT NULL,
     from_account_id INTEGER NOT NULL,
     to_account_id INTEGER NOT NULL,
+    transaction_type_id INTEGER NOT NULL,
+
     FOREIGN KEY(from_account_id) REFERENCES accounts(id),
-    FOREIGN KEY(to_account_id) REFERENCES accounts(id)
-
-
+    FOREIGN KEY(to_account_id) REFERENCES accounts(id),
+    FOREIGN KEY(transaction_type_id) REFERENCES transaction_types(id)
 );
 
-CREATE TABLE transaction_type (
+CREATE TABLE transaction_types (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    type TEXT NOT NULL,
-    transaction_id INTEGER NOT NULL,
-    FOREIGN KEY(transaction_id) REFERENCES transactions(id)
+    name TEXT NOT NULL
 );
 
 CREATE TABLE cards (
@@ -55,5 +54,15 @@ CREATE TABLE cards (
     FOREIGN KEY(account_id) REFERENCES accounts(id)
 );
 
-
+INSERT INTO transaction_types (name)
+    VALUES
+        ("Food"),
+        ("Alcohol"),
+        ("Gas"),
+        ("Clothes"),
+        ("Entertainment"),
+        ("Accommodation"),
+        ("Electronics"),
+        ("Education"),
+        ("Family");
 

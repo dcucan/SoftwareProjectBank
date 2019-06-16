@@ -16,7 +16,7 @@ public class Transaction {
 
     private Account toAccount;
 
-
+    private int transactionTypeId;
 
     public int getId() {
         return id;
@@ -58,8 +58,20 @@ public class Transaction {
         this.toAccount = toAccount;
     }
 
-    public TransactionType getType() {
-        return (new TransactionTypeRepository()).findByTransaction(this);
+    public int getTransactionTypeId() {
+        return transactionTypeId;
+    }
+
+    public void setTransactionTypeId(int transactionTypeId) {
+        this.transactionTypeId = transactionTypeId;
+    }
+
+    public boolean isIncommingFor(Account account) {
+        return account.getId() == this.getToAccount().getId();
+    }
+
+    public TransactionType getTransactionType() {
+        return new TransactionTypeRepository().findBy("id", this.transactionTypeId);
     }
 
     @Override
