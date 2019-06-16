@@ -91,5 +91,27 @@ public class CardRepository {
 
     }
 
+    public void update(Card card){
+        String sql = "UPDATE cards SET number = ?, expiration = ?, ccv = ? , pin = ?, image = ?, account_id = ?, card_limit =?" +
+                " WHERE id = ? ";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1,card.getNumber());
+            stmt.setDate(2, card.getExpirationDate());
+            stmt.setInt(3, card.getCcv());
+            stmt.setString(4, card.getPin());
+            stmt.setString(5,card.getImage());
+            stmt.setInt(6, card.getAccountId().getId());
+            stmt.setInt(7, card.getLimit());
+            stmt.setInt(8, card.getId());
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

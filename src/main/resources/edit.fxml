@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="546.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Separator layoutY="220.0" prefHeight="0.0" prefWidth="546.0" />
+      <Separator layoutX="-5.0" layoutY="411.0" prefHeight="3.0" prefWidth="556.0" />
+      <Pane layoutX="-8.0" layoutY="-3.0" prefHeight="50.0" prefWidth="556.0" style="-fx-background-color: #05c5ff#05c5ff;">
+         <effect>
+            <InnerShadow height="75.64" radius="19.11" width="2.8" />
+         </effect>
+      </Pane>
+      <TextField fx:id="name" layoutX="54.0" layoutY="86.0" promptText="Name" />
+      <TextField fx:id="surname" layoutX="54.0" layoutY="128.0" promptText="Surname" />
+      <TextField fx:id="email" layoutX="273.0" layoutY="86.0" promptText="Email" />
+      <PasswordField fx:id="newpassword" layoutX="273.0" layoutY="128.0" promptText="Password" />
+      <Label layoutX="89.0" layoutY="162.0" text="To change password, please enter your old password" />
+      <Label layoutX="234.0" layoutY="47.0" prefHeight="18.0" prefWidth="65.0" text="Profile">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="oldpassword" layoutX="170.0" layoutY="188.0" promptText="Old password" />
+      <Button layoutX="440.0" layoutY="188.0" mnemonicParsing="false" onAction="#onEditProfile" styleClass="success" text="Edit profile" />
+      <Button layoutX="430.0" layoutY="382.0" mnemonicParsing="false" onAction="#onEditAccount" styleClass="success" text="Edit account" />
+      <Button layoutX="454.0" layoutY="589.0" mnemonicParsing="false" onAction="#onEditCard" styleClass="success" text="Edit card" />
+      <Label layoutX="225.0" layoutY="224.0" prefHeight="18.0" prefWidth="65.0" text="Account">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="248.0" layoutY="415.0" prefHeight="18.0" prefWidth="37.0" text="Card">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="account" layoutX="172.0" layoutY="264.0" prefWidth="169.0" promptText="Choose account" />
+      <TextField fx:id="type" layoutX="172.0" layoutY="316.0" promptText="Type" />
+      <Button layoutX="234.0" layoutY="367.0" mnemonicParsing="false" onAction="#onDeleteAccount" styleClass="danger" text="Delete" />
+      <ComboBox fx:id="card" layoutX="54.0" layoutY="449.0" onAction="#onChooseCard" prefWidth="169.0" promptText="Choose card" />
+      <TextField fx:id="limit" layoutX="54.0" layoutY="494.0" promptText="Limit" />
+      <ComboBox fx:id="design" layoutX="54.0" layoutY="543.0" onAction="#onDesign" prefWidth="169.0" promptText="Design" />
+      <Pane layoutX="257.0" layoutY="453.0" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #05c5ff#05c5ff;">
+         <children>
+            <ImageView fx:id="image" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+      <Button layoutX="237.0" layoutY="591.0" mnemonicParsing="false" onAction="#onDeleteCard" styleClass="danger" text="Delete" />
+      <Separator layoutX="-5.0" layoutY="236.0" prefHeight="13.0" prefWidth="556.0" />
+      <Separator layoutX="-14.0" layoutY="59.0" prefHeight="13.0" prefWidth="567.0" />
+      <Separator layoutX="-5.0" layoutY="427.0" prefHeight="13.0" prefWidth="556.0" />
+   </children>
+   <effect>
+      <InnerShadow height="255.0" radius="127.0" width="255.0" />
+   </effect>
+</Pane>

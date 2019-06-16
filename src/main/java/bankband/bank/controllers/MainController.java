@@ -18,10 +18,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -137,12 +140,6 @@ public class MainController implements Controller {
 
         pieChart.setData(list);
 
-
-
-
-
-
-
     }
 
 
@@ -170,7 +167,17 @@ public class MainController implements Controller {
 
 
 
-    public void onNewCard(){
+    public void onEdit() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(new EditController());
+        loader.setLocation(getClass().getClassLoader().getResource("edit.fxml"));
+        Parent root = loader.load();
 
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getClassLoader().getResource("css/bootstrap3.css").toExternalForm());
+        stage.setScene(scene);
+        stage.setTitle("Edit");
+        stage.show();
     }
 }

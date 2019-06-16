@@ -58,8 +58,9 @@
          </effect>
          <children>
             <Label fx:id="name" layoutX="52.0" layoutY="16.0" prefHeight="17.0" prefWidth="206.0" text="Label" textFill="WHITE" />
-          <Button layoutX="312.0" layoutY="12.0" minWidth="20.0" mnemonicParsing="false" onAction="#onNewAccount" prefWidth="101.0" text="New account" textAlignment="CENTER" />
-            <Button layoutX="413.0" layoutY="12.0" minWidth="0.0" mnemonicParsing="false" onAction="#onLogout" prefWidth="90.0" text="Logout" textAlignment="CENTER" textOverrun="LEADING_WORD_ELLIPSIS" />
+          <Button layoutX="243.0" layoutY="10.0" minWidth="20.0" mnemonicParsing="false" onAction="#onNewAccount" prefWidth="101.0" text="New account" textAlignment="CENTER" />
+            <Button layoutX="423.0" layoutY="10.0" minWidth="0.0" mnemonicParsing="false" onAction="#onLogout" prefWidth="90.0" text="Logout" textAlignment="CENTER" textOverrun="LEADING_WORD_ELLIPSIS" />
+            <Button layoutX="353.0" layoutY="10.0" minWidth="20.0" mnemonicParsing="false" onAction="#onEdit" prefWidth="55.0" text="Edit" textAlignment="CENTER" />
          </children>
       </Pane>
       <Pane layoutY="51.0" prefHeight="7.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
