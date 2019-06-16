@@ -32,6 +32,11 @@ public class LoginController implements Controller {
     }
 
 
+    /**
+     * Přihlášení uživatele podle emailu
+     * Rozhashování hesla z databáze, porovná se se vtupem od uživatele
+     * @throws IOException
+     */
     public void onLogin() throws IOException {
         User user = userRepo.findByEmail(email.getText());
 
@@ -52,6 +57,10 @@ public class LoginController implements Controller {
         }
     }
 
+    /**
+     * Zobrazí okno pro registraci nového uživatele
+     * @throws IOException
+     */
     public void onRegister() throws IOException {
         SceneManager.get().activate("register");
     }

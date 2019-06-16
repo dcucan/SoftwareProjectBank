@@ -31,6 +31,9 @@ public class TransactionHistoryController implements Controller {
         updateTransactions();
     }
 
+    /**
+     * Aktualizuje trasnakce
+     */
     public void updateTransactions(){
 
         List<Transaction> list = repo.findAllForAccount(account);

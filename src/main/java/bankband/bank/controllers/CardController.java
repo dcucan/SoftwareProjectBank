@@ -41,6 +41,11 @@ public class CardController implements Controller {
     SwitchImage switchImage = new SwitchImage();
 
 
+    /**
+     * Nastavení jednotlivých Pane pro main controller
+     * Každá karta má svůj vlastní pane
+     * @param card
+     */
     public void setUp(Card card){
         String imageName = card.getImage();
         image.setImage(switchImage.nameToImage(imageName));

@@ -21,9 +21,11 @@ public class Card {
 
     private int limit;
 
-    public int getLimit(){return limit;}
+    public int getLimit() {
+        return limit;
+    }
 
-    public void setLimit(int limit){
+    public void setLimit(int limit) {
         this.limit = limit;
     }
 

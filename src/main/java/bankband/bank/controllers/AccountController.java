@@ -38,6 +38,10 @@ public class AccountController implements Controller {
         this.account = account;
     }
 
+    /**
+     * Vytvoří novou transakci
+     * @throws IOException
+     */
     public void onNewTransaction() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setController(new NewTransactionController(account));
@@ -52,6 +56,10 @@ public class AccountController implements Controller {
 
     }
 
+    /**
+     * Zobrazí historii transakcí
+     * @throws IOException
+     */
     public void onTransactionHistory() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setController(new TransactionHistoryController(account));
@@ -67,8 +75,10 @@ public class AccountController implements Controller {
     }
 
 
-
-
+    /**
+     * Vytvoří novou kartu
+     * @throws IOException
+     */
     public void onNewCard() throws IOException {
 
         FXMLLoader loader = new FXMLLoader();

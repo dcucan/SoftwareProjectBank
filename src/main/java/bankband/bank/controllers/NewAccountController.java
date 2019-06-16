@@ -19,6 +19,9 @@ public class NewAccountController implements Controller {
     @FXML
     private TextField type;
 
+    /**
+     * Vytvoření nové karty
+     */
     public void onCreate() {
         Account account = new Account();
         account.setType(type.getText());
@@ -38,6 +41,10 @@ public class NewAccountController implements Controller {
         }
     }
 
+    /**
+     * Vrátí se na hlavní obrazovku
+     * @throws IOException
+     */
     public void onGoBack() throws IOException {
         SceneManager.get().activate("main");
     }

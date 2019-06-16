@@ -60,6 +60,7 @@ public class NewTransactionController implements Controller {
     }
 
 
+
     public void onTransactionType() {
         String selected = transactionType.getSelectionModel().getSelectedItem();
         System.out.println(selected);
