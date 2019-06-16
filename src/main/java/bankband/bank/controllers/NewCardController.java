@@ -60,7 +60,7 @@ public class NewCardController implements Controller {
         CardRepository repository = new CardRepository();
 
         Card card = new Card();
-        card.setAccountId(account);
+        card.setAccount(account);
         card.setNumber(random.nextInt(8999) + 1000 + random.nextInt(8999) + 1000
                 + random.nextInt(8999) + 1000 + random.nextInt(8999) + 1000);
         card.setCcv(random.nextInt(899)+100);

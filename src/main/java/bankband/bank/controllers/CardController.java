@@ -47,8 +47,8 @@ public class CardController implements Controller {
         limit.setText(card.getLimit()+"");
         name.setText(Auth.get().getUser().getName());
         number.setText(card.getNumber()+"");
-        account.setText(card.getAccountId().getNumber()+"");
-        postCode.setText(card.getAccountId().getPostNumber()+"");
+        account.setText(card.getAccount().getNumber()+"");
+        postCode.setText(card.getAccount().getPostNumber()+"");
 
     }
 
