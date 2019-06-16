@@ -5,10 +5,7 @@ import bankband.bank.models.Account;
 import bankband.bank.models.Card;
 import bankband.bank.services.Auth;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +22,11 @@ public class CardRepository {
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, card.getNumber());
-            stmt.setDate(2, card.getExpirationDate());
+            stmt.setDate(2, new Date(card.getExpirationDate().getTime()));
             stmt.setInt(3, card.getCcv());
             stmt.setString(4, card.getPin());
             stmt.setString(5, card.getImage());
-            stmt.setInt(6, card.getAccountId().getId());
+            stmt.setInt(6, card.getAccount().getId());
             stmt.setInt(7, card.getLimit());
             stmt.execute();
 
@@ -73,7 +70,7 @@ public class CardRepository {
                 card.setExpirationDate(rs.getDate("expiration"));
                 card.setCcv(rs.getInt("ccv"));
                 card.setNumber(rs.getInt("number"));
-                card.setAccountId(account);
+                card.setAccount(account);
                 card.setId(rs.getInt("id"));
 
 

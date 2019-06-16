@@ -1,7 +1,7 @@
 package bankband.bank.models;
 
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Card {
 
@@ -17,7 +17,7 @@ public class Card {
 
     private String image;
 
-    private Account accountId;
+    private Account account;
 
     private int limit;
 
@@ -75,12 +75,12 @@ public class Card {
         this.image = image;
     }
 
-    public Account getAccountId() {
-        return accountId;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountId(Account accountId) {
-        this.accountId = accountId;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override
