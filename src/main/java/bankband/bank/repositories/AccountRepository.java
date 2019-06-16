@@ -24,14 +24,18 @@ public class AccountRepository {
             stmt.setInt(1, number);
             ResultSet rs = stmt.executeQuery();
 
-            Account account = new Account();
-            account.setPostNumber(rs.getInt("postNumber"));
-            account.setNumber(rs.getInt("number"));
-            account.setBalance(rs.getInt("balance"));
-            account.setType(rs.getString("type"));
-            account.setId(rs.getInt("id"));
-            account.setUserId(rs.getInt("user_id"));
-            return account;
+            if (rs.next()) {
+                Account account = new Account();
+                account.setPostNumber(rs.getInt("postNumber"));
+                account.setNumber(rs.getInt("number"));
+                account.setBalance(rs.getInt("balance"));
+                account.setType(rs.getString("type"));
+                account.setId(rs.getInt("id"));
+                account.setUserId(rs.getInt("user_id"));
+                return account;
+            } else {
+                return null;
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,13 +43,13 @@ public class AccountRepository {
         }
     }
 
-    public Account findById(int id){
+    public Account findById(int id) {
         String sql = "SELECT * FROM accounts WHERE id = ?";
 
 
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1,id);
+            stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
 
             Account account = new Account();
