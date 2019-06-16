@@ -75,13 +75,18 @@ public class NewTransactionController implements Controller {
             return;
         }
 
+        if (toAccount.equals(fromAccount)){
+            fal.setText("Can not send money to yourself.");
+            return;
+        }
+
         if (toAccount.getPostNumber() != Convert.toInt(postCode.getText())) {
             fal.setText("Invalid bank code.");
             return;
         }
 
         if (this.transactionType.getSelectionModel().getSelectedItem() == null) {
-            fal.setText("Missing type of transaction");
+            fal.setText("Missing type of transaction.");
             return;
         }
 
