@@ -3,6 +3,7 @@ package bankband.bank;
 import org.apache.commons.io.IOUtils;
 
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.*;
@@ -28,6 +29,19 @@ public class Database {
     }
 
     /**
+     * Odpojí se od databáze a zahodí instanci. Používá se v testech pro zamezení zamykání databáze.
+     *
+     * @throws SQLException
+     */
+    public static void trashInstance() throws SQLException {
+        if (instance == null) return;
+
+        instance.getConnection().close();
+
+        instance = null;
+    }
+
+    /**
      * Konstruktor pro vytvoření spojení
      */
     private Database() {
@@ -36,7 +50,9 @@ public class Database {
 
             connection = DriverManager.getConnection(str);
 
-            System.out.println("Connected to: " + str);
+            if (Config.DEBUG) {
+                System.out.println("Connected to: " + str);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(1);
@@ -46,9 +62,16 @@ public class Database {
     /**
      * Přečte SQL z init.sql a vytvoří databázi v db
      */
-    public void install() throws Exception {
+    public boolean install() {
         Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("init.sql"));
-        String content = IOUtils.toString(reader);
+
+        String content = null;
+        try {
+            content = IOUtils.toString(reader);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
 
         // Rozdelime soubor na jednotlive SQL prikazy oddelene stredniky a postupne je jeden po druhem spustime
         for (String sql : content.split(";")) {
@@ -58,11 +81,25 @@ public class Database {
             // Preskocime prazdne prikazy
             if (sql.length() == 0) continue;
 
-            System.out.println("\nExecuting sql:\n" + sql);
+            if (Config.DEBUG) {
+                System.out.println("\nExecuting sql:\n" + sql);
+            }
 
-            Statement stmt = connection.createStatement();
-            stmt.execute(sql);
+            Statement stmt = null;
+            try {
+                stmt = connection.createStatement();
+                stmt.execute(sql);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
+
+        if (Config.DEBUG) {
+            System.out.println("Database installed successfully.");
+        }
+
+        return true;
     }
 
     public Connection getConnection() {

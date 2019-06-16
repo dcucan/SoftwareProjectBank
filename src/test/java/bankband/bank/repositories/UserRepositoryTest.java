@@ -12,7 +12,9 @@ public class UserRepositoryTest extends BaseTest {
     private UserRepository repo;
 
     @Before
-    public void before() {
+    public void before() throws Exception {
+        super.before();
+
         repo = new UserRepository();
     }
 
@@ -51,5 +53,25 @@ public class UserRepositoryTest extends BaseTest {
         assertEquals(user1, repo.findById(id1));
         assertEquals(user2, repo.findById(id2));
         assertEquals(null, repo.findById(123));
+    }
+
+    @Test
+    public void itFindsByEmail() {
+        User user1 = new User();
+        user1.setName("Franta");
+        user1.setSurname("Sídlo");
+        user1.setEmail("franta@sadlo.cz");
+        user1.setPassword("password");
+
+        User user2 = new User();
+        user2.setName("Ana");
+        user2.setSurname("Frankova");
+        user2.setEmail("ffr@email.cz");
+        user2.setPassword("pass");
+
+        Integer id1 = repo.create(user1);
+        Integer id2 = repo.create(user2);
+
+        assertEquals(user1, repo.findByEmail(user1.getEmail()));
     }
 }
