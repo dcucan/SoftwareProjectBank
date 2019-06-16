@@ -1,5 +1,7 @@
 package bankband.bank.controllers;
 
+import bankband.bank.EventBus;
+import bankband.bank.events.*;
 import bankband.bank.models.Account;
 import bankband.bank.models.Card;
 import bankband.bank.models.User;
@@ -64,6 +66,29 @@ public class EditController implements Controller {
     @Override
     public void initialize() {
         setUp();
+
+        EventBus.get().subscribe("cardDeletedE", CardDeleted.class, event -> {
+            setUp();
+        });
+
+        EventBus.get().subscribe("cardUpdatedE", CardUpdated.class, event -> {
+            setUp();
+        });
+
+        EventBus.get().subscribe("accountUpdatedE", AccountUpdated.class, event -> {
+            setUp();
+        });
+
+        EventBus.get().subscribe("accountDeletedE", AccountDeleted.class, event -> {
+            setUp();
+
+        });
+
+        EventBus.get().subscribe("userUpdatedE", UserUpdated.class, event -> {
+            setUp();
+        });
+
+
     }
 
     public void onEditProfile() {
@@ -99,6 +124,7 @@ public class EditController implements Controller {
         }
 
         if (userRepo.update(user)) {
+            EventBus.get().send(new UserUpdated(user));
             name.clear();
             surname.clear();
             email.clear();
@@ -129,6 +155,7 @@ public class EditController implements Controller {
                 if (type.getText().length() >= 2) {
                     account.setType(type.getText());
                     if (accountRepo.update(account)) {
+                        EventBus.get().send(new AccountUpdated(account));
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Success");
                         alert.setHeaderText(null);
@@ -190,6 +217,7 @@ public class EditController implements Controller {
                     }
 
                     if (cardRepo.update(card)) {
+                        EventBus.get().send(new CardUpdated(card));
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Success");
                         alert.setHeaderText(null);
@@ -217,6 +245,7 @@ public class EditController implements Controller {
 
             if (number == account.getNumber()) {
                 if (accountRepo.delete(account)) {
+                    EventBus.get().send(new AccountDeleted(account));
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");
                     alert.setHeaderText(null);
@@ -246,6 +275,7 @@ public class EditController implements Controller {
                 if (cardNumber == card.getNumber()) {
 
                     if (cardRepo.delete(card)) {
+                        EventBus.get().send(new CardDeleted(card));
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Success");
                         alert.setHeaderText(null);

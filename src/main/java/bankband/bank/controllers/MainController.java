@@ -1,8 +1,7 @@
 package bankband.bank.controllers;
 
 import bankband.bank.EventBus;
-import bankband.bank.events.NewCardCreated;
-import bankband.bank.events.NewTransactionCreated;
+import bankband.bank.events.*;
 import bankband.bank.models.Account;
 import bankband.bank.models.Card;
 import bankband.bank.models.TransactionType;
@@ -66,6 +65,28 @@ public class MainController implements Controller {
         EventBus.get().subscribe("cardCreated", NewCardCreated.class, event -> {
             updateCards();
         });
+
+        EventBus.get().subscribe("cardDeleted", CardDeleted.class, event -> {
+            updateCards();
+        });
+
+        EventBus.get().subscribe("cardUpdated", CardUpdated.class, event -> {
+            updateCards();
+        });
+
+        EventBus.get().subscribe("accountUpdated", AccountUpdated.class, event -> {
+            updateAccounts();
+        });
+
+        EventBus.get().subscribe("accountDeleted", AccountDeleted.class, event -> {
+            updateAccounts();
+            updateCards();
+        });
+
+        EventBus.get().subscribe("userUpdated", UserUpdated.class, event -> {
+            setName();
+        });
+
     }
 
     public void updateAccounts() {
