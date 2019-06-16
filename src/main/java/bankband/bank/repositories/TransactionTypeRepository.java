@@ -7,31 +7,21 @@ import bankband.bank.models.TransactionType;
 import bankband.bank.models.User;
 import bankband.bank.services.Auth;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class TransactionTypeRepository {
 
-
     private Connection conn = Database.getInstance().getConnection();
 
-    private int alcohol;
-    private int food;
-
-
     public Integer create(TransactionType transactionType) {
-        String sql = "INSERT INTO transaction_type(type, transaction_id)" +
-                "VALUES(?,?);";
+        String sql = "INSERT INTO transaction_types (name) VALUES(?)";
 
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, transactionType.getType());
-            stmt.setInt(2, transactionType.getTransactionId().getId());
+            stmt.setString(1, transactionType.getName());
             stmt.execute();
 
             sql = "SELECT last_insert_rowid();";
@@ -40,8 +30,6 @@ public class TransactionTypeRepository {
 
             transactionType.setId(rs.getInt(1));
             return transactionType.getId();
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -49,22 +37,22 @@ public class TransactionTypeRepository {
         return null;
     }
 
-    public TransactionType findByTransaction(Transaction transaction) {
-        String sql = "SELECT * FROM transaction_type WHERE transaction_id = ?";
+    public TransactionType findBy(String column, Object value) {
+        String sql = "SELECT * FROM transaction_types WHERE " + column + " = ?";
 
 
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, transaction.getId());
+            stmt.setObject(1, value);
+
             ResultSet rs = stmt.executeQuery();
 
-            TransactionType transactionType = new TransactionType();
-            transactionType.setId(rs.getInt(1));
-            transactionType.setType(rs.getString(2));
-            transactionType.setTransactionId(transaction);
-            return transactionType;
-
-
+            if (rs.next()) {
+                TransactionType transactionType = new TransactionType();
+                transactionType.setId(rs.getInt("id"));
+                transactionType.setName(rs.getString("name"));
+                return transactionType;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -72,6 +60,27 @@ public class TransactionTypeRepository {
         return null;
     }
 
+    public List<TransactionType> findAll() {
+        List<TransactionType> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM transaction_types";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                TransactionType transactionType = new TransactionType();
+                transactionType.setId(rs.getInt("id"));
+                transactionType.setName(rs.getString("name"));
+                list.add(transactionType);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 
 
 }

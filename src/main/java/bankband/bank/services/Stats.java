@@ -1,108 +1,34 @@
 package bankband.bank.services;
 
+
 import bankband.bank.models.Account;
 import bankband.bank.models.Transaction;
 import bankband.bank.models.TransactionType;
-import bankband.bank.models.User;
-import bankband.bank.repositories.AccountRepository;
-import bankband.bank.repositories.TransactionRepository;
-import bankband.bank.repositories.TransactionTypeRepository;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Stats {
 
-    private int alcohol;
-    private int food;
+    public Map<TransactionType, Integer> getSpendingsPerType() {
+        Map<TransactionType, Integer> stats = new HashMap<>();
 
-    private AccountRepository accountRepository = new AccountRepository();
-    private TransactionRepository transactionRepository = new TransactionRepository();
-    private TransactionTypeRepository transactionTypeRepository = new TransactionTypeRepository();
+        List<Account> accounts = Auth.get().getUser().getAccounts();
 
-    public ArrayList<String> getTypesString() {
-        ArrayList<TransactionType> types = getAllTransactionTypesForUser();
-        ArrayList<String> list = new ArrayList<>();
+        List<Transaction> transactions = new ArrayList<>();
 
-        for (TransactionType type : types) {
-            list.add(type.getType());
+        for (Account account : accounts) {
+            transactions.addAll(account.getOutgoingTransactions());
         }
 
-        return list;
-
-    }
-
-    public ArrayList<TransactionType> getAllTransactionTypesForUser() {
-        ArrayList<TransactionType> list = new ArrayList<>();
-        User user = Auth.get().getUser();
-        List<Account> allAccounts = accountRepository.findAllForUser(user);
-        List<Transaction> allTransactions;
-
-        for (Account account : allAccounts) {
-
-            allTransactions = transactionRepository.findAllForAccount(account);
-            for (Transaction transaction : allTransactions) {
-                if (!transactionRepository.isIncoming(transaction, account)) {
-                    list.add(transactionTypeRepository.findByTransaction(transaction));
-                }
-            }
-        }
-        return list;
-    }
-
-    public HashMap getSpendsAlcohol() {
-        User user = Auth.get().getUser();
-        List<TransactionType> types = getAllTransactionTypesForUser();
-        List<Account> allAccounts = accountRepository.findAllForUser(user);
-        List<Transaction> allTransactions;
-        HashMap<String, Integer> typesMap = new HashMap<>();
-        alcohol = 0;
-        food = 0;
-
-        for (Account account : allAccounts) {
-
-            allTransactions = transactionRepository.findAllForAccount(account);
-            for (Transaction transaction : allTransactions) {
-                for (TransactionType type : types) {
-                    if (transaction.getId() == type.getTransactionId().getId()) {
-                        if (type.getType().contains("Alcohol")) {
-                            alcohol = alcohol + transaction.getAmount();
-                        }
-                        if (type.getType().contains("Food")) {
-                            food = food + transaction.getAmount();
-                        }
-                    }
-                }
-            }
-        }
-        typesMap.put("Alcohol", alcohol);
-        typesMap.put("Food", food);
-        return typesMap;
-    }
-
-    public int getAlcohol() {
-        ArrayList<String> list = getTypesString();
-        alcohol = 0;
-
-        for (String string : list) {
-            if (string.contains("Alcohol")) {
-                alcohol++;
-            }
+        for (Transaction transaction : transactions) {
+            int sum = stats.getOrDefault(transaction.getTransactionType(), 0);
+            stats.put(transaction.getTransactionType(), sum + transaction.getAmount());
         }
 
-        return alcohol;
+        return stats;
     }
 
-    public int getFood() {
-        ArrayList<String> list = getTypesString();
-        food = 0;
-
-        for (String string : list) {
-            if (string.contains("Food")) {
-                food++;
-            }
-        }
-
-        return food;
-    }
 }

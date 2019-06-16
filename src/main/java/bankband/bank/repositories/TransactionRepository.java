@@ -15,8 +15,8 @@ public class TransactionRepository {
     private Connection conn = Database.getInstance().getConnection();
 
     public Integer create(Transaction transaction) {
-        String sql = "INSERT INTO transactions (ammount, date_time, from_account_id, to_account_id ) "
-                + "VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO transactions (ammount, date_time, from_account_id, to_account_id, transaction_type_id) "
+                + "VALUES (?, ?, ?, ?, ?);";
 
         try {
 
@@ -25,6 +25,7 @@ public class TransactionRepository {
             stmt.setDate(2, new Date(transaction.getDateTime().getTime()));
             stmt.setInt(3, transaction.getFromAccount().getId());
             stmt.setInt(4, transaction.getToAccount().getId());
+            stmt.setInt(5, transaction.getTransactionTypeId());
             stmt.execute();
 
             sql = "SELECT last_insert_rowid();";
@@ -38,15 +39,6 @@ public class TransactionRepository {
         }
 
         return null;
-    }
-
-
-    public boolean isIncoming(Transaction transaction, Account account){
-        if(account.getId()==transaction.getToAccount().getId()){
-            return true;
-        } else {
-        return false;
-        }
     }
 
     public List<Transaction> findAllForAccount(Account account) {
@@ -64,30 +56,23 @@ public class TransactionRepository {
 
 
             while (rs.next()) {
-
                 Transaction transaction = new Transaction();
                 transaction.setToAccount(repo.findById(rs.getInt("to_account_id")));
                 transaction.setFromAccount(repo.findById(rs.getInt("from_account_id")));
                 transaction.setDateTime(rs.getTime("date_time"));
                 transaction.setAmount(rs.getInt("ammount"));
                 transaction.setId(rs.getInt("id"));
-
+                transaction.setTransactionTypeId(rs.getInt("transaction_type_id"));
 
                 list.add(transaction);
-
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
             return list;
         }
 
         return list;
-
     }
-
-
 
 
 }

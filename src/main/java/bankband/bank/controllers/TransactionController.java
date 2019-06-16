@@ -13,7 +13,6 @@ import javafx.scene.layout.Pane;
 public class TransactionController implements Controller {
 
 
-
     @FXML
     private Label date;
 
@@ -47,42 +46,34 @@ public class TransactionController implements Controller {
     private TransactionType transactionType = new TransactionType();
     private TransactionTypeRepository typeRepo = new TransactionTypeRepository();
 
-    public TransactionController(Transaction transaction, Account account){
+    public TransactionController(Transaction transaction, Account account) {
         this.transaction = transaction;
         this.account = account;
-
-
     }
 
+    public void setUp(Account account, Transaction transaction) {
 
-
-    public void setUp(Account account,Transaction transaction){
-
-        if(repo.isIncoming(transaction, account)){
+        if (transaction.isIncommingFor(account)) {
             colorPane.setStyle("-fx-background-color: #23db1a;");
             date.setText("06-06-2019");
-            number.setText(""+transaction.getFromAccount().getNumber());
-            postCode.setText(""+transaction.getFromAccount().getPostNumber());
-            amount.setText(""+transaction.getAmount());
-            type.setText(typeRepo.findByTransaction(transaction).getType());
+            number.setText("" + transaction.getFromAccount().getNumber());
+            postCode.setText("" + transaction.getFromAccount().getPostNumber());
+            amount.setText("" + transaction.getAmount());
+            type.setText(transaction.getTransactionType().getName());
             fromTo.setText("From account:");
 
         } else {
             colorPane.setStyle("-fx-background-color: #ff0000;");
             date.setText("06-06-2019");
-            number.setText(""+transaction.getToAccount().getNumber());
-            postCode.setText(""+transaction.getToAccount().getPostNumber());
-            amount.setText(""+transaction.getAmount());
-            type.setText(typeRepo.findByTransaction(transaction).getType());
+            number.setText("" + transaction.getToAccount().getNumber());
+            postCode.setText("" + transaction.getToAccount().getPostNumber());
+            amount.setText("" + transaction.getAmount());
+            type.setText(transaction.getTransactionType().getName());
             fromTo.setText("To account:");
         }
 
 
-
-
-
     }
-
 
     @Override
     public void initialize() {

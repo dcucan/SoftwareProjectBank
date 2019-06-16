@@ -19,6 +19,8 @@ import java.time.LocalDate;
 
 public class NewTransactionController implements Controller {
 
+    private TransactionTypeRepository transactionTypeRepository = new TransactionTypeRepository();
+
     private Account fromAccount;
 
     @FXML
@@ -47,7 +49,10 @@ public class NewTransactionController implements Controller {
     @Override
     public void initialize() {
         transactionType.getItems().clear();
-        transactionType.getItems().setAll("Alcohol", "Food", "Gas");
+
+        for (TransactionType type : transactionTypeRepository.findAll()) {
+            transactionType.getItems().add(type.getName());
+        }
 
         number.setTextFormatter(NaturalNumberFilter.getFormatter());
         postCode.setTextFormatter(NaturalNumberFilter.getFormatter());
@@ -75,7 +80,7 @@ public class NewTransactionController implements Controller {
             return;
         }
 
-        if (toAccount.equals(fromAccount)){
+        if (toAccount.equals(fromAccount)) {
             fal.setText("Can not send money to yourself.");
             return;
         }
@@ -97,36 +102,36 @@ public class NewTransactionController implements Controller {
             return;
         }
 
+        TransactionType type = transactionTypeRepository.findBy("name", transactionType.getValue());
+        if (type == null) {
+            fal.setText("Invalid transaction type.");
+            return;
+        }
+
         Transaction transaction = new Transaction();
         transaction.setAmount(cash);
         transaction.setDateTime(Date.valueOf(LocalDate.now()));
         transaction.setFromAccount(fromAccount);
         transaction.setToAccount(toAccount);
+        transaction.setTransactionTypeId(type.getId());
 
 
-        if (transactionRepository.create(transaction) != null) {
-
-            TransactionType transactionType = new TransactionType();
-            transactionType.setType(this.transactionType.getSelectionModel().getSelectedItem());
-            transactionType.setTransactionId(transaction);
-            transactionTypeRepository.create(transactionType);
-
-            fromAccount.setBalance(fromAccount.getBalance() - cash);
-            accountRepository.update(fromAccount);
-
-            toAccount.setBalance(toAccount.getBalance() + cash);
-            accountRepository.update(toAccount);
-            tru.setText("Successful");
-            number.clear();
-            amount.clear();
-            postCode.clear();
-
-
-            EventBus.get().send(new NewTransactionCreated(transaction));
-        } else {
-            fal.setText("Something went wrong");
+        if (transactionRepository.create(transaction) == null) {
+            fal.setText("Something went wrong.");
+            return;
         }
+
+        fromAccount.setBalance(fromAccount.getBalance() - cash);
+        accountRepository.update(fromAccount);
+
+        toAccount.setBalance(toAccount.getBalance() + cash);
+        accountRepository.update(toAccount);
+
+        tru.setText("Successful");
+        number.clear();
+        amount.clear();
+        postCode.clear();
+
+        EventBus.get().send(new NewTransactionCreated(transaction));
     }
-
-
 }
