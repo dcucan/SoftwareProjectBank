@@ -52,6 +52,9 @@ public class MainController implements Controller {
     private UserRepository userRepo = new UserRepository();
     private AccountRepository accountRepo = new AccountRepository();
 
+    /**
+     * Při každé změně se zavolá příslušná metoda
+     */
     public void initialize() {
         setName();
         updateAccounts();
@@ -89,6 +92,10 @@ public class MainController implements Controller {
 
     }
 
+    /**
+     * Aktualizuje zobrazení účtů
+     * Každý účet má vlastní Pane
+     */
     public void updateAccounts() {
         List<Account> list = accountRepo.findAllForUser(Auth.get().getUser());
         accounts.getItems().clear();
@@ -107,6 +114,10 @@ public class MainController implements Controller {
 
     }
 
+    /**
+     * Aktualizuje zobrazení karet
+     * Každá karta má vlastní Pane
+     */
     public void updateCards(){
 
         cards.getItems().clear();
@@ -142,6 +153,9 @@ public class MainController implements Controller {
 
     }
 
+    /**
+     * Aktualizují se piecharty
+     */
     public void updateChart(){
 
         Stats stats = new Stats();

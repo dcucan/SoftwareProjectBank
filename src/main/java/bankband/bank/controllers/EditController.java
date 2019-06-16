@@ -63,6 +63,9 @@ public class EditController implements Controller {
     CardRepository cardRepo = new CardRepository();
     SwitchImage switchImage = new SwitchImage();
 
+    /**
+     * Při každé změně se znovu zavolá metoda setUp()
+     */
     @Override
     public void initialize() {
         setUp();
@@ -91,6 +94,9 @@ public class EditController implements Controller {
 
     }
 
+    /**
+     * Změní nastavení profilu uživatele jak v aplikaci, tak v databázi
+     */
     public void onEditProfile() {
         User user = Auth.get().getUser();
 
@@ -144,6 +150,9 @@ public class EditController implements Controller {
         }
     }
 
+    /**
+     * Změní informace o účtu jak v databázi, tak v aplikaci
+     */
     public void onEditAccount() {
         int number = Integer.parseInt(account.getSelectionModel().getSelectedItem());
 
@@ -174,6 +183,9 @@ public class EditController implements Controller {
 
     }
 
+    /**
+     * Po vybrání karty se zobrazí její vzhled
+     */
     public void onChooseCard() {
         int number = Integer.parseInt(card.getSelectionModel().getSelectedItem());
 
@@ -192,6 +204,9 @@ public class EditController implements Controller {
 
     }
 
+    /**
+     * Po vybrání designu se zobrazí jeho vzhled
+     */
     public void onDesign() {
         image.setImage(switchImage.nameToImage(design.getSelectionModel().getSelectedItem()));
     }
@@ -236,6 +251,9 @@ public class EditController implements Controller {
 
     }
 
+    /**
+     * Účet bude smazán
+     */
     public void onDeleteAccount() {
         int number = Integer.parseInt(account.getSelectionModel().getSelectedItem());
 
@@ -262,6 +280,9 @@ public class EditController implements Controller {
         }
     }
 
+    /**
+     * Karta bude smazána
+     */
     public void onDeleteCard() {
 
         int cardNumber = Integer.parseInt(card.getSelectionModel().getSelectedItem());
@@ -293,6 +314,9 @@ public class EditController implements Controller {
         }
     }
 
+    /**
+     * Základní nastavení comboboxů - nabídky účtů a karet
+     */
     public void setUp() {
         List<Account> accounts = Auth.get().getUser().getAccounts();
         List<String> accountNumbers = new ArrayList<>();

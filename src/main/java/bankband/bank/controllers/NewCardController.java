@@ -44,16 +44,25 @@ public class NewCardController implements Controller {
     @FXML
     private Label tru;
 
+    /**
+     * Nastavení comboboxu
+     */
     @Override
     public void initialize(){
         design.getItems().clear();
         design.getItems().setAll("Card", "Nature", "Gold");
     }
 
+    /**
+     * Zobrazí se styl karty
+     */
     public void onDesign(){
         image.setImage(switchImage.nameToImage(design.getSelectionModel().getSelectedItem()));
     }
 
+    /**
+     * Vytvoří novou kartu
+     */
     public void onConfirm(){
 
         String hash = Password.hashPassword(random.nextInt(8999) + 1000 + "" );
