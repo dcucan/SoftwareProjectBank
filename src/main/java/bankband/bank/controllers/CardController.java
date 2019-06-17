@@ -50,7 +50,7 @@ public class CardController implements Controller {
         String imageName = card.getImage();
         image.setImage(switchImage.nameToImage(imageName));
         limit.setText(card.getLimit()+"");
-        name.setText(Auth.get().getUser().getName());
+        name.setText(Auth.get().getUser().getName()+" "+Auth.get().getUser().getSurname());
         number.setText(card.getNumber()+"");
         account.setText(card.getAccount().getNumber()+"");
         postCode.setText(card.getAccount().getPostNumber()+"");

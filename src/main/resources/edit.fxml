@@ -50,7 +50,7 @@
       <ComboBox fx:id="card" layoutX="54.0" layoutY="449.0" onAction="#onChooseCard" prefWidth="169.0" promptText="Choose card" />
       <TextField fx:id="limit" layoutX="54.0" layoutY="494.0" promptText="Limit" />
       <ComboBox fx:id="design" layoutX="54.0" layoutY="543.0" onAction="#onDesign" prefWidth="169.0" promptText="Design" />
-      <Pane layoutX="257.0" layoutY="453.0" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #05c5ff#05c5ff;">
+      <Pane layoutX="257.0" layoutY="453.0" prefHeight="109.0" prefWidth="181.0" style="-fx-background-color: #05c5ff#05c5ff;">
          <children>
             <ImageView fx:id="image" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
          </children>
@@ -61,6 +61,6 @@
       <Separator layoutX="-5.0" layoutY="427.0" prefHeight="13.0" prefWidth="556.0" />
    </children>
    <effect>
-      <InnerShadow height="255.0" radius="127.0" width="255.0" />
+      <InnerShadow height="88.04" radius="28.340000000000003" width="27.32" />
    </effect>
 </Pane>
