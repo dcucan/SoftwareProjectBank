@@ -50,6 +50,10 @@ public class Database {
 
             connection = DriverManager.getConnection(str);
 
+            Statement stmt = connection.createStatement();
+            stmt.execute("PRAGMA foreign_keys = ON;");
+
+
             if (Config.DEBUG) {
                 System.out.println("Connected to: " + str);
             }
